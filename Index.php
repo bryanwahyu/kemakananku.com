@@ -73,7 +73,7 @@
           $password = md5($_POST['password']);
           $hak   = $_POST['hak'];
           
-          $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username='$username' AND password='$password'");
+          $query = mysqli_query($koneksi, "SELECT * FROM user WHERE user='$username' AND password='$password'");
           if(mysqli_num_rows($query) == 0){
             echo '<div class="alert alert-danger">Maaf kesalahan Password atau  maaf belum terdaftar .</div>';
           }else{
@@ -95,18 +95,31 @@
               echo '<div class="alert alert-danger"> login gagal Kesalahaan pada Server</div>';
             }
           }
-        }
-        ?
-                      ?>
-                      <form role="form">
+        }?>
+                      <form role="form" method="_POST">
                         <div class="form-group">
-                          <label class="control-label" for="exampleInputEmail1">Email address</label>
-                          <input class="form-control input-lg" id="exampleInputEmail1" placeholder="Enter email" type="email">
+                          <label class="control-label" for="exampleInputEmail1">username</label>
+                          <input class="form-control input-lg" id="username" placeholder="username" type="text">
                         </div>
                         <div class="form-group">
                           <label class="control-label" for="exampleInputPassword1">Password</label>
-                          <input class="form-control input-lg" id="exampleInputPassword1" placeholder="Password" type="password">
+                          <input class="form-control input-lg" id="password" placeholder="Password" type="password">
                         </div>
+                              <div class="form-group">
+                         <label class="control-label" for="exampleInputPassword1">Sebagai </label>
+            <select name="Hak Akses " class="form-control" required>
+                <option>Pilih Hak Akses </option>     
+                     <?php
+           include('konfigurasi/database.php');
+             $sql = mysql_query("SELECT * FROM akses ORDER BY hak ASC");
+          if(mysql_num_rows($sql) != 0){
+              while($data = mysql_fetch_assoc($sql)){
+                echo '<option>'.$data['hak'].'</option>';
+                }
+            }
+    ?>
+                      </select>
+  
                         <button type="submit" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
