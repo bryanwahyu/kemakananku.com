@@ -105,21 +105,26 @@
                           <label class="control-label" for="exampleInputPassword1">Password</label>
                           <input class="form-control input-lg" id="password" placeholder="Password" type="password">
                         </div>
-                              <div class="form-group">
+                          <div class="form-group">
                          <label class="control-label" for="exampleInputPassword1">Sebagai </label>
-            <select name="Hak Akses " class="form-control" required>
+                          <select name="Hak Akses " class="form-control" required>
                 <option>Pilih Hak Akses </option>     
-                     <?php
-           include('konfigurasi/database.php');
-             $sql = mysql_query("SELECT * FROM akses ORDER BY hak ASC");
-          if(mysql_num_rows($sql) != 0){
-              while($data = mysql_fetch_assoc($sql)){
-                echo '<option>'.$data['hak'].'</option>';
-                }
-            }
-    ?>
-                      </select>
+            
+              <?php //koneksi
+    $namaserver='localhost';
+    $userdb='root';
+    $passdb='';
+    $namadb='kemakananku';
   
+   $koneksi=mysql_connect($namaserver,$userdb,$passdb);
+   mysql_select_db($namadb,$koneksi);
+    $sql = mysql_query("SELECT * FROM akses ORDER BY idakses ASC");
+    while($row = mysql_fetch_assoc($sql)){
+    echo "<option value='$row[idaksses]'>$row[hak]</option>";
+}
+
+?>                      </select>
+                            </div>
                         <button type="submit" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?

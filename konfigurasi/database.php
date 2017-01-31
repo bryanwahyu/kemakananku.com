@@ -8,6 +8,6 @@ if (! $koneksi) {
 	echo "koneksi gagal";
 	mysql_error(); 
 }
-mysql_select_db($database) or die ("hubungan dengan database gagal ",mysql_error());
+mysql_select_db($database,$koneksi) or die ("hubungan dengan database gagal ",mysql_error());
 
 ?>
