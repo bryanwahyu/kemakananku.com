@@ -26,6 +26,7 @@
               <li class="">
                 <a href="">Cari Katering<br></a>
               </li>
+              
               <li>
                 <a href="#">Jual Katering</a>
               </li>
@@ -63,42 +64,10 @@
                     <div class="col-md-6">
                       <h1 class="text-left text-muted" contenteditable="true">Log In</h1>
                       <div class="col-md-12">
-                        <hr>
                       </div>
-                      <?php 
-                      if(isset($_POST['login'])){
-          include("konfigurasi/database.php");
-          
-          $username = $_POST['username'];
-          $password = md5($_POST['password']);
-          $hak   = $_POST['hak'];
-          
-          $query = mysqli_query($koneksi, "SELECT * FROM user WHERE user='$username' AND password='$password'");
-          if(mysqli_num_rows($query) == 0){
-            echo '<div class="alert alert-danger">Maaf kesalahan Password atau  maaf belum terdaftar .</div>';
-          }else{
-            $row = mysqli_fetch_assoc($query);
-            
-            if($row['hak'] == 1 && $hak == 1){
-              $_SESSION['username']=$username;
-              $_SESSION['hak']='admin';
-              header("Location: admin/user.php");
-            }else if($row['hak'] == 2 && $hak == 2){
-              $_SESSION['username']=$username;
-              $_SESSION['hak']= admin/Customer;
-              header("Location: user.php");
-            }else if($row['hak'] == 3 && $level == 3){
-              $_SESSION['username']=$username;
-              $_SESSION['level']='Penjual';
-              header("Location: user.php");
-            }else{
-              echo '<div class="alert alert-danger"> login gagal Kesalahaan pada Server</div>';
-            }
-          }
-        }?>
                       <form role="form" method="_POST">
                         <div class="form-group">
-                          <label class="control-label" for="exampleInputEmail1">username</label>
+                          <label class="control-label" for="username">username</label>
                           <input class="form-control input-lg" id="username" placeholder="username" type="text">
                         </div>
                         <div class="form-group">
@@ -110,17 +79,11 @@
                           <select name="Hak Akses " class="form-control" required>
                 <option>Pilih Hak Akses </option>     
             
-              <?php //koneksi
-    $namaserver='localhost';
-    $userdb='root';
-    $passdb='';
-    $namadb='kemakananku';
-  
-   $koneksi=mysql_connect($namaserver,$userdb,$passdb);
-   mysql_select_db($namadb,$koneksi);
-    $sql = mysql_query("SELECT * FROM akses ORDER BY idakses ASC");
-    while($row = mysql_fetch_assoc($sql)){
-    echo "<option value='$row[idaksses]'>$row[hak]</option>";
+              <?php 
+              include 'konfigurasi/database.php';
+    $sql = mysqli_query($conn,"SELECT * FROM akses ORDER BY idakses ASC");
+    while($row = mysqli_fetch_array($sql)){
+    echo "<option value='$row[idakses]'>$row[hak]</option>";
 }
 
 ?>                      </select>
