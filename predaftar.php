@@ -1,5 +1,5 @@
 
-<html><head>
+<!doctype html><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -61,28 +61,65 @@
                   <div class="row">
                     <div class="col-md-12">
                       <h1 class="text-center" contenteditable="true">Register</h1>
-                      <p class="text-center lead">Register As.</p>
                     </div>
                   </div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="section section-warning text-justify">
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <h3 class="text-center text-muted">Customer</h3>
-                                  <div style="text-align: center;">
-                                        <input type="button" value="Customer">
-                                    </div>
-                               
-                                </div>
-                              </div>
-                            </div>
+                    <form class="form-horizontal" method="post">
+                      <fieldset>
+                          <div class="control-group">
+                          <!-- Username -->
+                          <label class="control-label"  for="username">Username</label>
+                          <div class="controls">
+                            <input type="text" id="username" name="username" placeholder="username" class="input-xlarge">
+                            <p class="help-block"> isi Username dulu yaaa </p>
                           </div>
                         </div>
-                      </div>
-                    </div>
+
+                        <div class="control-group">
+                          <!-- E-mail -->
+                          <label class="control-label" for="email">E-mail</label>
+                          <div class="controls">
+                            <input type="email" id="email" name="email" placeholder="email" class="input-xlarge">
+                          <!-- Password-->
+                          <label class="control-label" for="password">Password</label>
+                          <div class="controls">
+                            <input type="password" id="password" name="password" placeholder="password" class="input-xlarge">
+                            <p class="help-block">isi password dulu minimal 6</p>
+                          </div>
+                        </div>
+
+                        <div class="control-group">
+                          <!-- Password -->
+                          <label class="control-label"  for="password_confirm"> konfirmasi password </label>
+                          <div class="controls">
+                            <input type="password" id="konfirmasi" name="konfirmasi" placeholder="konfirmasi" class="input-xlarge">
+                            <p class="help-block">konfirmasi passwordnyaa dulu bro </p>
+                          </div>
+                        </div>
+                             
+                        <div class="control-group">
+                          <!-- Password -->
+                          <label class="control-label"  for="password_confirm"> konfirmasi password </label>
+                          <div class="controls">
+                            <input type="password" id="konfirmasi" name="konfirmasi" placeholder="konfirmasi" class="input-xlarge">
+                            <p class="help-block">konfirmasi passwordnyaa dulu bro </p>
+                          </div>
+                        </div>v
+                        <div class="control-group">
+                          <!-- Password -->
+                          <label class="control-label"  for="password_confirm"> konfirmasi password </label>
+                          <div class="controls">
+                            <input type="password" id="konfirmasi" name="konfirmasi" placeholder="konfirmasi" class="input-xlarge">
+                            <p class="help-block">konfirmasi passwordnyaa dulu bro </p>
+                          </div>
+                        </div>                   
+                        <div class="control-group">
+                          <!-- Button -->
+                          <div class="controls">
+                            <button type="submit" class="btn btn-success">Register</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
                 </div>
               </div>
             </div>
@@ -110,7 +147,7 @@
           </center>
           <center>
           <p style="color:#521078" class="container"> 
-          This Web need supported by LAVAREL , JAVASCRIPT ,MARIADB AND PHP
+          This Web need supported by MARIADB AND PHP
           </p>
           </center>
          </div>      

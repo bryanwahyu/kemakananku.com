@@ -41,7 +41,7 @@
                   </li>
                   <li class="divider"></li>
                   <li>
-                    <a href="#">Register</a>
+                    <a href="daftar.php">Register</a>
                   </li>
                 </ul>
               </li>
@@ -83,7 +83,10 @@
               include 'konfigurasi/database.php';
     $sql = mysqli_query($conn,"SELECT * FROM akses ORDER BY idakses ASC");
     while($row = mysqli_fetch_array($sql)){
-    echo "<option value='$row[idakses]'>$row[hak]</option>";
+      if ($row[idakses]<4) {
+            echo "<option value='$row[idakses]'>$row[hak]</option>";
+      }
+
 }
 
 ?>                      </select>
@@ -91,7 +94,10 @@
                         <button type="submit" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
-                        <a href="">Register disini</a>
+                        <a href="daftar.php">Register disini</a>
+                      </h3>
+                       <h3>lupa password ?
+                        <a href="reset.php">klik disini</a>
                       </h3>
                     </div>
                   </div>

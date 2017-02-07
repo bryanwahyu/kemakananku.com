@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
+                <img src=" pict/logosmall.png" style="float:left;width:40px;height:40px;">
                 <a class="navbar-brand" href="index.html">Kemakananku Admin</a>
             </div>
             <!-- Top Menu Items -->
@@ -214,6 +214,9 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                <div>
+
+                </div>
 
              
             </div>
