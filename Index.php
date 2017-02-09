@@ -94,7 +94,7 @@
                         <button type="submit" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
-                        <a href="daftar.php">Register disini</a>
+                        <a href="register.html">Register disini</a>
                       </h3>
                        <h3>lupa password ?
                         <a href="reset.php">klik disini</a>
