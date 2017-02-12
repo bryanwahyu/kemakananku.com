@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if ($_SESSION) {
+    header("Location:cek.php");
+}
+?>
 <html><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,10 +27,10 @@
           <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="hidden-md hidden-sm nav navbar-nav navbar-right">
               <li class="active">
-                <a href="">Home</a>
+                <a href="index.php">Home</a>
               </li>
-              <li class="">
-                <a href="">Cari Katering<br></a>
+              <li>
+                <a href="menukatering.php">Cari Katering<br></a>
               </li>
               
               <li>
@@ -37,11 +43,11 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account&nbsp;<i class="fa fa-caret-down text-inverse"></i></a>
                 <ul class="dropdown-menu" role="menu">
                   <li>
-                    <a href="#">Log In</a>
+                    <a href="index.php">Log In</a>
                   </li>
                   <li class="divider"></li>
                   <li>
-                    <a href="daftar.php">Register</a>
+                    <a href="register.php">Register</a>
                   </li>
                 </ul>
               </li>
@@ -65,36 +71,50 @@
                       <h1 class="text-left text-muted" contenteditable="true">Log In</h1>
                       <div class="col-md-12">
                       </div>
-                      <form role="form" method="_POST">
+                      <?php
+        if(isset($_POST['login'])){
+          include("konfigurasi/database.php");
+          
+          $username = $_POST['username'];
+          $password = md5($_POST['password']);
+          
+          $query = mysqli_query($conn,"SELECT * FROM user WHERE ( username='$username' OR email='$username') AND password='$password'");
+          if(mysqli_num_rows($query) == 0){
+            echo '<div class="alert alert-danger">Upss...!!! password salah .</div>';
+          }else{
+            $row = mysqli_fetch_assoc($query);
+            
+            if($row['kode_akses'] == 1){
+              $_SESSION['username']=$username;
+              $_SESSION['akses']='admin';
+              header("Location: cek.php");
+            }else if($row['kode_akses'] == 2){
+              $_SESSION['username']=$username;
+              $_SESSION['akses']='pembeli';
+              header("Location: cek.php");
+            }else if($row['kode_akses'] == 3){
+              $_SESSION['username']=$username;
+              $_SESSION['akses']='catering';
+              header("Location: cek.php");
+            }else{
+              echo '<div class="alert alert-danger">Upss...!!! Login gagal.</div>';
+            }
+          }
+        }
+        ?>
+                      <form role="form" method="POST" action="">
                         <div class="form-group">
                           <label class="control-label" for="username">username</label>
-                          <input class="form-control input-lg" id="username" placeholder="username" type="text">
+                          <input class="form-control input-lg" name ="username" placeholder="username" type="text">
                         </div>
                         <div class="form-group">
                           <label class="control-label" for="exampleInputPassword1">Password</label>
-                          <input class="form-control input-lg" id="password" placeholder="Password" type="password">
+                          <input class="form-control input-lg" name ="password" placeholder="Password" type="password">
                         </div>
-                          <div class="form-group">
-                         <label class="control-label" for="exampleInputPassword1">Sebagai </label>
-                          <select name="Hak Akses " class="form-control" required>
-                <option>Pilih Hak Akses </option>     
-            
-              <?php 
-              include 'konfigurasi/database.php';
-    $sql = mysqli_query($conn,"SELECT * FROM akses ORDER BY idakses ASC");
-    while($row = mysqli_fetch_array($sql)){
-      if ($row[idakses]<4) {
-            echo "<option value='$row[idakses]'>$row[hak]</option>";
-      }
-
-}
-
-?>                      </select>
-                            </div>
-                        <button type="submit" class="btn btn-default">Log In</button>
+                        <button type="submit" name="login" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
-                        <a href="daftar.php">Register disini</a>
+                        <a href= "register.php">Register disini</a>
                       </h3>
                        <h3>lupa password ?
                         <a href="reset.php">klik disini</a>

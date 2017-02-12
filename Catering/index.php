@@ -1,9 +1,3 @@
-<?php 
-session_start();
-if(empty($_SESSION))
-{ 
-header("Location")
-}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,10 +43,90 @@ header("Location")
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Catering </a>
+                <a class="navbar-brand" href="index.html">Kemakananku Admin</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-footer">
+                            <a href="#">Read All New Messages</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">View All</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -76,22 +150,25 @@ header("Location")
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
                   
-                
-                    <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
-                      <ul id="catering" class="collapse">
+                     <li>
+                     <a href="javascript:;" data-toggle="collapse" data-target="#admin"><i class="fa fa-fw fa-user-secret"></i> Admin <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="admin" class="collapse">
                             <li class="active">
-                                <a href="index.php"><span class="glyphicon glyphicon-cutlery"></span> Data Caterng</a>
+                                <a href="index.php"><i class="fa fa-user-secret"></i> Data Admin</a>
                             </li>
                             <li>
-                          <a href="menu.php"> <span class=" glyphicon glyphicon-book"></span> Data menu dan Promosi </a>
-                          </li>  
- 
-                         <li>
-                                <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
+                                <a href="komisi.php"><i class="fa fa-money"></i> Pembagian Komisi </a>
                             </li>
                         </ul>
-                      <li>
-                                <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
+                  
+                     </li>
+                    <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
+                      <ul id="catering" class="collapse">
+                            <li>
+                                <a href="catering.php"><span class="glyphicon glyphicon-cutlery"></span> Data Catering</a>
+                            </li>
+                            <li>
+                                <a href="paket.php"><i class="fa fa-tasks"></i> Pengecekan Paket </a>
                             </li>
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
@@ -123,11 +200,12 @@ header("Location")
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Catering  <small>Selamat Datang</small>
+                            Admin <small>Lihat Hasil </small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-secret"></i> Data Catering                      </li>
+                                <i class="fa fa-user-secret"></i> Data Admin
+                            </li>
                         </ol>
                     </div>
                 </div>
@@ -141,7 +219,7 @@ header("Location")
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">26</div>
-                                        <div>Komisi belum dibayar  </div>
+                                        <div>Komisi </div>
                                     </div>
                                 </div>
                             </div>
@@ -207,13 +285,13 @@ header("Location")
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">13</div>
-                                        <div>data pembeli dari paket </div>
+                                        <div>Pengaduan</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="pembeli.php ">
+                            <a href="Pengaduan ">
                                 <div class="panel-footer">
-                                    <span class="pull-left">Lihat Pembeli </span>
+                                    <span class="pull-left">Lihat Pengaduan </span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
