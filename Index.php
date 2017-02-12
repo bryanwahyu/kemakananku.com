@@ -114,7 +114,11 @@ if ($_SESSION) {
                         <button type="submit" name="login" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
+<<<<<<< HEAD
                         <a href= "register.php">Register disini</a>
+=======
+                        <a href="register.html">Register disini</a>
+>>>>>>> origin/master
                       </h3>
                        <h3>lupa password ?
                         <a href="reset.php">klik disini</a>
