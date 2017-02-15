@@ -60,7 +60,7 @@ if ($_SESSION) {
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <div class="section section-warning text-justify">
+              <div class="section section-warning text-justify" style="opacity: 0.4;">
                 <div class="container">
                   <div class="row">
                     <div class="col-md-6">
