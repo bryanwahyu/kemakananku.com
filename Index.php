@@ -26,8 +26,8 @@ if ($_SESSION) {
           </div>
           <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="hidden-md hidden-sm nav navbar-nav navbar-right">
-              <li class="active">
-                <a href="index.php">Home</a>
+              <li>
+                <a href="promo.php">Home</a>
               </li>
               <li>
                 <a href="menukatering.php">Cari Katering<br></a>
@@ -42,7 +42,7 @@ if ($_SESSION) {
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account&nbsp;<i class="fa fa-caret-down text-inverse"></i></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li>
+                  <li class="active">
                     <a href="index.php">Log In</a>
                   </li>
                   <li class="divider"></li>
@@ -114,12 +114,7 @@ if ($_SESSION) {
                         <button type="submit" name="login" class="btn btn-default">Log In</button>
                       </form>
                       <h3>Belum punya akun ?
-<<<<<<< HEAD
-                        <a href= "register.php">Register disini</a>
-=======
-                        <a href="register.html">Register disini</a>
->>>>>>> origin/master
-                      </h3>
+                       <a href= "register.php">Register disini</a> </h3>
                        <h3>lupa password ?
                         <a href="reset.php">klik disini</a>
                       </h3>

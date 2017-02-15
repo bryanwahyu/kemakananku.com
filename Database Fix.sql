@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 10.1.19-MariaDB : Database - kemakananku
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -371,7 +372,7 @@ CREATE TABLE `tipe_customer` (
 
 LOCK TABLES `tipe_customer` WRITE;
 
-insert  into `tipe_customer`(`id`,`tipe`) values (1,'Mahasisswa'),(2,'Perusahaan'),(3,'Hotel'),(4,'Peorangan'),(5,'Pernikahan');
+insert  into `tipe_customer`(`id`,`tipe`) values (1,'Mahasiswa'),(2,'Perusahaan'),(3,'Hotel'),(4,'Peorangan'),(5,'Pernikahan');
 
 UNLOCK TABLES;
 
