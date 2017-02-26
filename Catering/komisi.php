@@ -1,6 +1,12 @@
+<?php 
+session_start();
+if(empty($_SESSION))
+{ 
+header("Location:../index.php");
+}
+$user=$_SESSION['username'];
+?>
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -9,8 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kemakananku Catering </title>
-
+    <title>Kemakananku Catering</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
@@ -43,105 +48,22 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin</a>
+                <a class="navbar-brand" href="index.html">Kemakananku Admin </a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="inbox.php"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="keluar.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -150,25 +72,25 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
                   
-                     <li>
-                     <a href="javascript:;" data-toggle="collapse" data-target="#admin"><i class="fa fa-fw fa-user-secret"></i> Admin <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="admin" class="collapse">
-                            <li>
-                                <a href="index.php"><i class="fa fa-user-secret"></i> Data Admin</a>
-                            </li>
-                            <li class="active">
-                                <a href="komisi.php"><i class="fa fa-money"></i> Pembagian Komisi </a>
-                            </li>
-                        </ul>
-                  
-                     </li>
+                
                     <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="catering" class="collapse">
-                            <li>
-                                <a href="catering.php"><span class="glyphicon glyphicon-cutlery"></span> Data Catering</a>
+                            <li class="active">
+                                <a href="index.php"><span class="glyphicon glyphicon-cutlery"></span> Data Caterng</a>
                             </li>
                             <li>
-                                <a href="paket.php"><i class="fa fa-tasks"></i> Pengecekan Paket </a>
+                          <a href="menu.php"> <span class=" glyphicon glyphicon-book"></span> Data menu dan Promosi </a>
+                          </li>  
+                            <li>
+                                <a href="promosi.php"><i class="fa fa-cart"></i>
+                                Data Promosi </a>
+                            </li>
+                         <li>
+                                <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
+                            </li>
+                        </ul>
+                      <li>
+                                <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
@@ -200,13 +122,102 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Komisi <small>Pembagian Komisi  </small>
+                           Catering  <small>Selamat Datang</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-money"></i> Data Komisi
-                            </li>
+                                <i class="fa fa-user-secret"></i> Data Catering                      </li>
                         </ol>
+                    </div>
+                </div>
+ <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><? ?></div>
+                                        <div>Komisi belum dibayar  </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="komisi.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">lihat detil</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php ?></div>
+                                        <div>paket</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="paket.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Detail Paket</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">124</div>
+                                        <div>Pesanan </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="pesanan.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Detail Pesanan </span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-ticket fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">13</div>
+                                        <div>data pembeli dari paket </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="pembeli.php ">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Lihat Pembeli </span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <!-- /.row -->

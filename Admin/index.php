@@ -3,10 +3,14 @@ session_start();
 if (empty($_SESSION)) {
     header("Location:../index.php");
 }
+include 'konfigurasi/database.php';
+$user=$_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama'];
+$idadmin =  $row['id'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -55,17 +59,15 @@ if (empty($_SESSION)) {
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $nama;?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            <a href="inbox.php"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="keluar.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -227,8 +229,99 @@ if (empty($_SESSION)) {
                     </div>
                 </div>
                 <!-- /.row -->
+<h1> Data Admin </h1>
+<?php
 
-             
+        if($idadmin<5)
+        { 
+            if(isset($_GET['aksi']) == 'delete'){
+                $id = $_GET['id'];
+                $usercode =$_GET['kode_user'];
+                $cek = mysqli_query($conn, "SELECT * from data_admin WHERE id='$id'");
+                if(mysqli_num_rows($cek) == 0){
+                    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+                }else{
+                    $delete = mysqli_query($conn, "DELETE from data_admin where id='$id' ");
+                    $delete2 = mysqli_query($conn,"DELETE from user where '$usercode'=iduser");
+                    if($delete){
+                        if($delete2){
+
+
+                        echo '<div class="alert alert-primary alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data berhasil dihapus.</div>';
+                    }
+                    else {
+                        echo '<div class ="alert alert-danger alert-dismissable" 
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button> data admin berhasil namun  data user gagal dihapus harap menhubungin Bryan atau Bagus</div>';
+                    }
+
+                    }else{
+                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data gagal dihapus.</div>';
+                    }
+                }
+            }
+        }
+        if($idadmin<5)
+        {
+    echo'<a class="btn btn-primary" href="add_admin.php"><i class="fa fa-user-plus" > </i> Tambah Admin </a>';
+        }
+    ?>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nama</th>
+        <th>Username</th>
+        <th>email</th>
+        <th>job</th>
+        <th>No Telpon </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    $viewq1=mysqli_query($conn,"SELECT * from data_admin,user where kode_user = iduser");
+    if(mysqli_num_rows($viewq1) ==0){
+                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
+                }else{
+                    $no = 1;
+                    while($row = mysqli_fetch_assoc($viewq1)){
+                        echo '
+                        <tr>
+                            <td>'.$no.'</td>
+                            <td>'.$row['nama'].'</td>
+                            <td>'.$row['username'].'</a></td>
+                            <td>'.$row['email'].'</td>
+                            <td>'.$row['Job'].'</td>
+                            <td>'.$row['notelp'].'</td>';
+                        echo '
+                            </td>
+                            <td>
+                              '; if($idadmin<5)
+                              {  
+                             echo'
+                                <a href="edit_admin.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                <a href="password.php?id='.$row['iduser'].'" title="Ganti Password" data-placement="bottom" data-toggle="tooltip" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+
+                            <a href="index.php?aksi=delete&id='.$row['id'].'&kode_user='.$row['kode_user'].'" title="Hapus Data" onclick="return confirm(\'Anda yakin akan menghapus data '.$row['nama'].'?/\)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            
+                            </td>
+                        </tr>';
+                    }
+                    else 
+                    {
+                        echo'
+                                <a href="view_admin.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>';
+                             
+                    }
+                    $no++;
+           
+                    }
+                }
+        ?>
+
+    </tbody>
+    </table>
+
             </div>
             <!-- /.container-fluid -->
 

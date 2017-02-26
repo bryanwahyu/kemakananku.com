@@ -129,34 +129,107 @@ $nama = $row['nama'];
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Paket Menu <small> Check </small>
+                            Admin <small>tambah data </small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                            <i class="fa fa-tasks"></i> Paket </a>
+                                <i class="fa fa-user-secret"></i> Data Admin
                             </li>
                         </ol>
                     </div>
                 </div>
-                <!-- /.row -->
+			
+			<?php
+			if(isset($_POST['add'])){
+				$nama		     = $_POST['nama'];
+				$no_telepon		 = $_POST['no_telepon'];
+				$jabatan		 = $_POST['jabatan'];
+				$email			 = $_POST['email'];
+				$username		 = $_POST['username'];
+				$pass1	         = $_POST['pass1'];
+				$pass2           = $_POST['pass2'];
+				
+				$cek = mysqli_query($conn, "SELECT * FROM user WHERE username='$username' or email='$email'");
+				if(mysqli_num_rows($cek) == 0){
+					if($pass1 == $pass2){
+						$pass = md5($pass1);
+						$insert1=mysqli_query($conn,"INSERT INTO user (username,password,email,kode_akses) VALUES ('$username','$pass','$email',1) ");
+						$lastid=mysqli_insert_id($conn);
+						$insert2=mysqli_query($conn,"INSERT INTO data_admin (nama,Job,notelp,kode_user) VALUES ('$nama','$jabatan',$no_telepon,$lastid)");
+						if($insert1 && $insert2){
+							echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data Admin Berhasil Di Simpan.</div>';
+						}else{
+							echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Ups, Data Admin Gagal Di simpan !</div>';
+						}
+					} else{
+						echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password Tidak sama !</div>';
+					}
+				}else{
+					echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Usename atau email Sudah Ada..!</div>';
+				}
+			}
+			?>
+			
+			<form class="form-horizontal" action="" method="post">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Nama</label>
+					<div class="col-sm-4">
+						<input type="text" name="nama" class="form-control" placeholder="Nama" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">No Telepon</label>
+					<div class="col-sm-3">
+						<input type="text" name="no_telepon" class="form-control" placeholder="No Telepon" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Jabatan</label>
+					<div class="col-sm-2">
+						<select name="jabatan" class="form-control" required>
+							<option value=""> ----- </option>
+							<option value="Marketing">Marketing </option>
+							<option value="Creative">Creative Design</option>
+                            <option value="Operator">Operator </option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Username</label>
+					<div class="col-sm-2">
+						<input type="text" name="username" class="form-control" placeholder="Username">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Password</label>
+					<div class="col-sm-2">
+						<input type="password" name="pass1" class="form-control" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Ulangi Password</label>
+					<div class="col-sm-2">
+						<input type="password" name="pass2" class="form-control" placeholder="Ulangi Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">email</label>
+					<div class="col-sm-4">
+						<input type="email" name="email" class="form-control" placeholder="email" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">&nbsp;</label>
+					<div class="col-sm-6">
+						<input type="submit" name="add" class="btn btn-sm btn-primary" value="Simpan">
+						<a href="index.php" class="btn btn-sm btn-danger">Batal</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
-             
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>

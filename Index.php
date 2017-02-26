@@ -60,8 +60,8 @@ if ($_SESSION) {
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <div class="section section-warning text-justify" style="opacity: 0.4;">
-                <div class="container">
+              <div class="section section-warning text-justify" style="opacity: 0.85;">
+                <div class="container" style="opacity: 1;">
                   <div class="row">
                     <div class="col-md-6">
                       <h3 class="text-center text-muted">Selamat Datang di Kemakananku</h3>
