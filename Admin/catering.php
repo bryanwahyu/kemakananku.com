@@ -167,7 +167,7 @@ $nama = $row['nama'];
                             <td>'.$row['email'].'</td>
                             <td>'.$row['pemilik'].'</td>
                             <td>'.$row['notelp'].'</td>';
-                            if ($row['aktif']==0)
+                            if ($row['Aktif']==0)
                             {
                                 echo'<td class="danger"> Belum Aktif </td>';
                             }
@@ -179,7 +179,7 @@ $nama = $row['nama'];
                             </td>
                             <td>
                                 <a href="aktifcatering.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                <a href="view_admin.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>';
                 

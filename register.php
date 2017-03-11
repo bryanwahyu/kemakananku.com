@@ -105,8 +105,6 @@
                                    <div class="col-md-6"> <button type="button" class="btn btn-warning" data-toggle="modal"  data-target="#event"><span> Event or Company</span> </button> 
                                    </div>
                                   </div>
-                               
-
                                 </div>
                               </div>
                             </div>
@@ -439,5 +437,5 @@
        </footer>
     </div>
   
-
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </body></html>

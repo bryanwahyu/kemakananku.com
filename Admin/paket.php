@@ -139,6 +139,62 @@ $nama = $row['nama'];
                     </div>
                 </div>
                 <!-- /.row -->
+                <!-- /.row -->
+
+       <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Nama Katering </th>
+        <th>Pemesanan</th>
+        <th>Paket yang Dipesan</th>
+        <th>Promo</th>
+        <th>Pembeli </th>
+        <th>Lunas </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    $viewq1=mysqli_query($conn,"SELECT * from ");
+    if(mysqli_num_rows($viewq1) ==0){
+                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
+                }else{
+                    $no = 1;
+                    while($row = mysqli_fetch_assoc($viewq1)){
+                        echo '
+                        <tr>
+                            <td>'.$no.'</td>
+                            <td>'.$row['nama_catering'].'</td>
+                            <td>'.$row['username'].'</a></td>
+                            <td>'.$row['email'].'</td>
+                            <td>'.$row['pemilik'].'</td>
+                            <td>'.$row['notelp'].'</td>';
+                            if ($row['Promo']==0)
+                            {
+                                echo'<td class="danger"> bukan promo</td>';
+                            }
+                            else
+                            {
+                                echo'<td class="success"> Promo </td>';
+                            } 
+                        echo '
+                            </td>
+                            <td>
+                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>';
+                
+                    $no++;
+           
+                    }
+                }
+        ?>
+
+    </tbody>
+    </table>
+        
 
              
             </div>

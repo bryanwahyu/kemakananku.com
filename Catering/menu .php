@@ -1,15 +1,10 @@
 <?php 
 session_start();
-include 'konfigurasi/database.php';
-if (empty($_SESSION)) {
-    header("Location:../index.php");
- 
+if(empty($_SESSION))
+{ 
+header("Location:../index.php");
 }
-$user= $_SESSION['username'];
-$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
-$row = mysqli_fetch_assoc($query);
-$nama = $row['nama'];
-
+$user=$_SESSION['username'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -58,7 +53,7 @@ $nama = $row['nama'];
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $nama; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>

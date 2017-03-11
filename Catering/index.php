@@ -6,10 +6,11 @@ if (empty($_SESSION)) {
  
 }
 $user= $_SESSION['username'];
-$query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
 $row = mysqli_fetch_assoc($query);
-$nama = $row['nama'];
-
+$nama = $row['nama_catering'];
+$aktif = $row['Aktif'];
+$id    = $row['id'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -53,7 +54,7 @@ $nama = $row['nama'];
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin </a>
+                <a class="navbar-brand" href="index.php">Kemakananku Catering </a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -76,8 +77,6 @@ $nama = $row['nama'];
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
-                  
-                
                     <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="catering" class="collapse">
                             <li class="active">
@@ -90,9 +89,9 @@ $nama = $row['nama'];
                                 <a href="promosi.php"><i class="fa fa-cart"></i>
                                 Data Promosi </a>
                             </li>
-                         <li>
+                             <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
-                            </li>
+                             </li>
                         </ul>
                       <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
@@ -100,20 +99,21 @@ $nama = $row['nama'];
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
-                        </ul>
-                    </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                      <ul id="pembeli" class="collapse">
+                        <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
+                            <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
+
                             <li>
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
-                    </li>
                     <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
+                    
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -144,7 +144,7 @@ $nama = $row['nama'];
                                         <i class="fa fa-money fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><? ?></div>
+                                        <div class="huge"></div>
                                         <div>Komisi belum dibayar  </div>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@ $nama = $row['nama'];
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php ?></div>
+                                        <div class="huge"></div>
                                         <div>paket</div>
                                     </div>
                                 </div>
@@ -188,7 +188,6 @@ $nama = $row['nama'];
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
                                         <div>Pesanan </div>
                                     </div>
                                 </div>
@@ -210,8 +209,6 @@ $nama = $row['nama'];
                                         <i class="fa fa-ticket fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>data pembeli dari paket </div>
                                     </div>
                                 </div>
                             </div>
@@ -226,9 +223,105 @@ $nama = $row['nama'];
                     </div>
                 </div>
                 <!-- /.row -->
+<?php
+                if($aktif==0){
+                    echo '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Maaf anda belum aktif mohon hubungi ke Pihak kemakananku </div>';
+                }else
+                {
 
-             
+            }
+      $sql = mysqli_query($conn, "SELECT * FROM data_catering,tipe_catering WHERE data_catering.id='$id' AND tipe_catering.id=kode_tipe limit 1");
+        $row=mysqli_fetch_assoc($sql);    
+    ?>
+               
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Katering </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" value="<?php echo $row['nama_catering']; ?>" class="form-control" placeholder="Nama" readonly>
+                    </div>
+                </div>
+
+    <div class="form-group">
+        <label class=" col-sm-3 control-label">Alamat:
+                    </label>
+      <div class="col-sm-4">
+        <textarea readonly class="form-control" id="alamat" rows="3"  ><?php echo $row['alamat']?>
+        </textarea>
+      </div>
+      </div>
+
+
+    <div class="form-group">
+        <label class=" col-sm-3 control-label">Deskripsi :
+                    </label>
+      <div class="col-sm-4">
+        <textarea readonly class="form-control" id="alamat" rows="3"  ><?php echo $row['deskripsi'];?>
+        </textarea>
+      </div>
+      </div>
+
+
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Pemilik </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" value="<?php echo $row ['pemilik']; ?>" class="form-control" placeholder="Nama" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">No Telepon</label>
+                    <div class="col-sm-3">
+                        <input type="text" name="no_telepon" value="<?php echo $row ['notelp']; ?>" class="form-control" placeholder="No Telepon" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">status</label>
+                    <?php
+                        if ($row['Aktif']==1) {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="aktif" readonly>
+                    </div>';
+                        }else 
+                        {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="nonaktif" readonly>
+                    </div>';
+                        }
+                    ?>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Laporan Keuangan </label>
+                    <?php
+                        if ($row['laporan_keuangan']==1) {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="ada" readonly>
+                    </div>';
+                        }else 
+                        {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="tidak pake" readonly>
+                    </div>';
+                        }
+                    ?>
+                    
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Tipe Catering</label>
+                    <div class="col-sm-3">
+                        <input type="text" name="no_telepon" value="<?php echo $row ['tipe']; ?>" class="form-control" placeholder="No Telepon" readonly>
+                    </div>
+                </div>           
             </div>
+            <div class="form-group">
+            <?php echo                                 '<a href="profile.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit profile </a>'
+?>
+            
+            </div>
+            </form>
+            
             <!-- /.container-fluid -->
 
         </div>
@@ -239,6 +332,7 @@ $nama = $row['nama'];
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

@@ -140,7 +140,66 @@ $nama = $row['nama'];
                 </div>
                 <!-- /.row -->
 
-             
+                             <!-- /.row -->
+
+      <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Nama Katering </th>
+        <th>Paket yang Dipesan</th>
+        <th>biaya</th>
+        <th>Pembeli </th>
+        <th>Lunas </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    $viewq1=mysqli_query($conn,"SELECT * FROM pesanan INNER JOIN data_pembeli ON pesanan.kodepembeli = data_pembeli.id INNER JOIN data_catering ON pesanan.`kodpenjual` = data_catering.id");
+
+    if(mysqli_num_rows($viewq1) ==0){
+                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
+                }else{
+                    $no = 1;
+                while($row = mysqli_fetch_assoc($viewq1)){
+                      
+                        echo '
+                        <tr>
+                            <td>'.$no.'</td>
+                            <td>'.$row['nama_catering'].'</td>
+                            <td>'.$row['namapaket'].'</a></td>
+                            <td>'.$row['total'].'</td>
+                            <td>'.$row['nama'].'</td>';
+                            if ($row['lunas']==0)
+                            {
+                                echo'<td class="danger"> Belum dibayar </td>';
+                            }
+                            else
+                            {
+                                echo'<td class="success"> Sudah dibayar
+                                 </td>';
+                            } 
+                        echo '
+                            </td>
+                            <td>
+                            
+                                <a href="view_catering.php?id='.$row['kodepenjual'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> penjual</a>
+                            </td>
+                            <a href="view_catering.php?id='.$row['kodepembeli'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> pembeli</a>
+                            </td>
+                        </tr>';
+                
+                    $no++;
+           
+                    }
+                }
+        ?>
+
+    </tbody>
+    </table>
+        
+
             </div>
             <!-- /.container-fluid -->
 

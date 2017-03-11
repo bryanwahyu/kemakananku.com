@@ -1,10 +1,15 @@
 <?php 
 session_start();
-if(empty($_SESSION))
-{ 
-header("Location:../index.php");
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
 }
-$user=$_SESSION['username'];
+$user= $_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama'];
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -37,7 +42,7 @@ $user=$_SESSION['username'];
 
     <div id="wrapper">
 
-        
+        <!-- Navigation -->
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color : #ec971f;" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -117,115 +122,6 @@ $user=$_SESSION['username'];
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                           Catering  <small>Selamat Datang</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-user-secret"></i> Data Catering                      </li>
-                        </ol>
-                    </div>
-                </div>
- <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-money fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><? ?></div>
-                                        <div>Komisi belum dibayar  </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="komisi.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">lihat detil</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-tasks fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php ?></div>
-                                        <div>paket</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="paket.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Paket</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-shopping-cart fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>Pesanan </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pesanan.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Pesanan </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-ticket fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>data pembeli dari paket </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pembeli.php ">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Lihat Pembeli </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-             
             </div>
             <!-- /.container-fluid -->
 

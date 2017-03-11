@@ -37,6 +37,7 @@ $user=$_SESSION['username'];
 
     <div id="wrapper">
 
+      
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color : #ec971f;" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -48,12 +49,12 @@ $user=$_SESSION['username'];
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin </a>
+                <a class="navbar-brand" href="index.php">Kemakananku Catering </a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $nama; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -71,8 +72,6 @@ $user=$_SESSION['username'];
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
-                  
-                
                     <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="catering" class="collapse">
                             <li class="active">
@@ -85,9 +84,9 @@ $user=$_SESSION['username'];
                                 <a href="promosi.php"><i class="fa fa-cart"></i>
                                 Data Promosi </a>
                             </li>
-                         <li>
+                             <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
-                            </li>
+                             </li>
                         </ul>
                       <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
@@ -95,20 +94,24 @@ $user=$_SESSION['username'];
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
-                        </ul>
-                    </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                      <ul id="pembeli" class="collapse">
+                        <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
+                    </li>  <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
+
                             <li>
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
                     </li>
+                    <ul>
                     <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
+                    </ul>
+                    
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -143,7 +143,59 @@ $nama = $row['nama'];
 
                 </div>
 
-             
+                             <!-- /.row -->
+
+       <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>username </th>
+        <th>Komentar</th>
+        <th>Tanggapin</th>
+        <th>tipe</th>
+        <th>Dibalas</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    $viewq1=mysqli_query($conn,"SELECT * from tiket inner join tipe_kategori on tiket.kodetipe=tipe_kategori.id inner join tiket.user=user.iduser");
+    if(mysqli_num_rows($viewq1) ==0){
+                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
+                }else{
+                    $no = 1;
+                    while($row = mysqli_fetch_assoc($viewq1)){
+                        echo '
+                        <tr>
+                            <td>'.$no.'</td>
+                            <td>'.$row['username'].'</td>
+                            <td>'.$row['isi'].'</a></td>
+                            <td>'.$row['tanggap'].'</td>';
+                            if (isset($row['tanggap']))
+                            {
+                                echo'<td class="success"> sudah </td>';
+                            }
+                            else
+                            {
+                                echo'<td class="danger">Belum </td>';
+                            } 
+                        echo '
+                            </td>
+                            <td>
+                            <a href="Tanggapin.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            </td>
+                        </tr>';
+                
+                    $no++;
+           
+                    }
+                }
+        ?>
+
+    </tbody>
+    </table>
+        
+
             </div>
             <!-- /.container-fluid -->
 

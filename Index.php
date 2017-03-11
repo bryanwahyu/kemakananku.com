@@ -11,7 +11,8 @@ if ($_SESSION) {
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="default.css" rel="stylesheet" type="text/css">
-  </head><body>
+  </head>
+  <body>
     <div class="row">
       <div class="navbar navbar-default">
         <div class="container">
@@ -31,10 +32,6 @@ if ($_SESSION) {
               </li>
               <li>
                 <a href="menukatering.php">Cari Katering<br></a>
-              </li>
-              
-              <li>
-                <a href="#">Jual Katering</a>
               </li>
               <li>
                 <a href="">Contact Us</a>

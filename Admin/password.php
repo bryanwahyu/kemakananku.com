@@ -54,7 +54,7 @@ $nama = $row['nama'];
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin</a>
+                <a class="navbar-brand" href="index.php">Kemakananku Admin</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -129,90 +129,77 @@ $nama = $row['nama'];
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Komisi <small>Pembagian Komisi  </small>
+                            Admin <small>edit data</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-money"></i> Data Komisi
+                                <i class="fa fa-user-secret"></i> Data Admin
                             </li>
                         </ol>
                     </div>
                 </div>
-                <!-- /.row -->
-
-       <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>Nama Katering </th>
-        <th>Paket yang Dipesan</th>
-        <th>biaya</th>
-        <th>Pembeli </th>
-        <th>Lunas </th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-    $viewq1=mysqli_query($conn,"SELECT * FROM pesanan INNER JOIN data_pembeli ON pesanan.kodepembeli = data_pembeli.id INNER JOIN data_catering ON pesanan.`kodpenjual` = data_catering.id");
-
-    if(mysqli_num_rows($viewq1) ==0){
-                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
-                }else{
-                    $no = 1;
-                    while($row = mysqli_fetch_assoc($viewq1)){
-                      $biaya =$row['total']*5/100;
-                        echo '
-                        <tr>
-                            <td>'.$no.'</td>
-                            <td>'.$row['nama_catering'].'</td>
-                            <td>'.$row['namapaket'].'</a></td>
-                            <td>'.$biaya.'</td>
-                            <td>'.$row['nama'].'</td>';
-                            if ($row['pembayaran']==0)
-                            {
-                                echo'<td class="danger"> Belum dibayar </td>';
-                            }
-                            else
-                            {
-                                echo'<td class="success"> Sudah dibayar
-                                 </td>';
-                            } 
-                        echo '
-                            </td>
-                            <td>
-                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                <a href="view_catering.php?id='.$row['kodepenjual'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> penjual</a>
-                            </td>
-                            <a href="view_pembeli.php?id='.$row['kodepembeli'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> pembeli</a>
-                            </td>
-                        </tr>';
+			
+			 <?php
+            if(isset($_POST['ganti'])){
+                $id        = $_GET['id'];
+                $password   = md5($_POST['password']);
+                $password1  = $_POST['password1'];
+                $password2  = $_POST['password2'];
                 
-                    $no++;
-           
+                $cek = mysqli_query($conn, "SELECT * FROM user WHERE iduser='$id' AND password='$password'");
+                if(mysqli_num_rows($cek) == 0){
+                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password salah masukan password yang benar</div>';
+                }else{
+                    if($password1 == $password2){
+                        if(strlen($password1) >= 6){
+                            $pass = md5($password1);
+                            $update = mysqli_query($conn, "UPDATE user SET password='$pass' WHERE iduser='$id'");
+                            if($update){
+                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password berhasil dirubah.</div>';
+                            }else{
+                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password gagal dirubah.</div>';
+                            }
+                        }else{
+                            echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Panjang karakter Password minimal 6 karakter.</div>';
+                        }
+                    }else{
+                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Pasword tidak sama</div>';
                     }
                 }
-        ?>
-
-    </tbody>
-    </table>
-        
-            </div>
-            <!-- /.container-fluid -->
-
+            }
+            ?>
+            
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Password Lama</label>
+                    <div class="col-sm-4">
+                        <input type="password" name="password" class="form-control" placeholder="Password Lama" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Password Baru</label>
+                    <div class="col-sm-4">
+                        <input type="password" name="password1" class="form-control" placeholder="Password Baru" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Ulangi Password Baru</label>
+                    <div class="col-sm-4">
+                        <input type="password" name="password2" class="form-control" placeholder="Ulangi Password baru" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-6">
+                        <input type="submit" name="ganti" class="btn btn-sm btn-info" value="Simpan">
+                        <a href="index.php" class="btn btn-sm btn-danger"><b>Batal</b></a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <!-- /#page-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>

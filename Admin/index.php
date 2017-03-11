@@ -9,6 +9,14 @@ $query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user'
 $row = mysqli_fetch_assoc($query);
 $nama = $row['nama'];
 $idadmin =  $row['id'];
+$query1=mysqli_query($conn,"SELECT * from tagihan");
+$count1=mysqli_num_rows($query1);
+$query2=mysqli_query($conn,"SELECT * from data_catering where aktif=0");
+$count2=mysqli_num_rows($query2);
+$query3= mysqli_query($conn,"SELECT * from  tiket ");
+$count3= mysqli_num_rows($query3);
+$query4= mysqli_query($conn,"SELECT * from paket");
+$count4= mysqli_num_rows($query4);
 ?>
 <!DOCTYPE html>
 <head>
@@ -24,6 +32,7 @@ $idadmin =  $row['id'];
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+
 
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -146,8 +155,8 @@ $idadmin =  $row['id'];
                                     <div class="col-xs-3">
                                         <i class="fa fa-money fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
+                                  <div class="col-xs-9 text-right">
+                                        <div class="huge"><? echo $count1; ?></div>
                                         <div>Komisi </div>
                                     </div>
                                 </div>
@@ -169,14 +178,14 @@ $idadmin =  $row['id'];
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
-                                        <div>paket</div>
+                                        <div class="huge"><?echo $count2;?></div>
+                                        <div>data Catering </div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="paket.php">
+                            <a href="catering.php">
                                 <div class="panel-footer">
-                                    <span class="pull-left">Detail Paket</span>
+                                    <span class="pull-left">Detail Catering</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -191,7 +200,7 @@ $idadmin =  $row['id'];
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
+                                        <div class="huge"><? echo $count4;?></div>
                                         <div>Pesanan </div>
                                     </div>
                                 </div>
@@ -213,7 +222,7 @@ $idadmin =  $row['id'];
                                         <i class="fa fa-ticket fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
+                                        <div class="huge"><?echo $count3;?></div>
                                         <div>Pengaduan</div>
                                     </div>
                                 </div>

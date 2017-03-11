@@ -129,90 +129,118 @@ $nama = $row['nama'];
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Komisi <small>Pembagian Komisi  </small>
+                            Catering <small>view data</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-money"></i> Data Komisi
+                                <i class="fa fa-user-secret"></i> Data Catering
                             </li>
                         </ol>
                     </div>
                 </div>
-                <!-- /.row -->
+			
+			 <?php
+            $id = $_GET['id'];
+            $sql = mysqli_query($conn, "SELECT * FROM data_catering,tipe_catering WHERE data_catering.id='$id' AND tipe_catering.id=kode_tipe");
+            if(mysqli_num_rows($sql) == 0){
+                header("Location: catering.php");
+            }else{
+                $row = mysqli_fetch_assoc($sql);
+            }
+    ?>
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Katering </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" value="<?php echo $row['nama_catering']; ?>" class="form-control" placeholder="Nama" readonly>
+                    </div>
+                </div>
 
-       <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>Nama Katering </th>
-        <th>Paket yang Dipesan</th>
-        <th>biaya</th>
-        <th>Pembeli </th>
-        <th>Lunas </th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-    $viewq1=mysqli_query($conn,"SELECT * FROM pesanan INNER JOIN data_pembeli ON pesanan.kodepembeli = data_pembeli.id INNER JOIN data_catering ON pesanan.`kodpenjual` = data_catering.id");
+    <div class="form-group">
+        <label class=" col-sm-3 control-label">Alamat:
+                    </label>
+      <div class="col-sm-4">
+        <textarea readonly class="form-control" id="alamat" rows="3"  ><?php echo $row['alamat']?>
+        </textarea>
+      </div>
+      </div>
 
-    if(mysqli_num_rows($viewq1) ==0){
-                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
-                }else{
-                    $no = 1;
-                    while($row = mysqli_fetch_assoc($viewq1)){
-                      $biaya =$row['total']*5/100;
-                        echo '
-                        <tr>
-                            <td>'.$no.'</td>
-                            <td>'.$row['nama_catering'].'</td>
-                            <td>'.$row['namapaket'].'</a></td>
-                            <td>'.$biaya.'</td>
-                            <td>'.$row['nama'].'</td>';
-                            if ($row['pembayaran']==0)
-                            {
-                                echo'<td class="danger"> Belum dibayar </td>';
-                            }
-                            else
-                            {
-                                echo'<td class="success"> Sudah dibayar
-                                 </td>';
-                            } 
-                        echo '
-                            </td>
-                            <td>
-                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                <a href="view_catering.php?id='.$row['kodepenjual'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> penjual</a>
-                            </td>
-                            <a href="view_pembeli.php?id='.$row['kodepembeli'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> pembeli</a>
-                            </td>
-                        </tr>';
-                
-                    $no++;
-           
-                    }
-                }
-        ?>
 
-    </tbody>
-    </table>
-        
-            </div>
-            <!-- /.container-fluid -->
+    <div class="form-group">
+        <label class=" col-sm-3 control-label">Deskripsi :
+                    </label>
+      <div class="col-sm-4">
+        <textarea readonly class="form-control" id="alamat" rows="3"  ><?php echo $row['deskripsi']?>
+        </textarea>
+      </div>
+      </div>
 
+
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Pemilik </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" value="<?php echo $row ['pemilik']; ?>" class="form-control" placeholder="Nama" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">No Telepon</label>
+                    <div class="col-sm-3">
+                        <input type="text" name="no_telepon" value="<?php echo $row ['notelp']; ?>" class="form-control" placeholder="No Telepon" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">status</label>
+                    <?php
+                        if ($row['Aktif']==1) {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="aktif" readonly>
+                    </div>';
+                        }else 
+                        {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="nonaktif" readonly>
+                    </div>';
+                        }
+                    ?>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Laporan Keuangan </label>
+                    <?php
+                        if ($row['laporan_keuangan']==1) {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="ada" readonly>
+                    </div>';
+                        }else 
+                        {
+                            echo '<div class="col-sm-2">
+                        <input type="text" class="form-control" value="tidak pake" readonly>
+                    </div>';
+                        }
+                    ?>
+                    
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Tipe Catering</label>
+                    <div class="col-sm-3">
+                        <input type="text" name="no_telepon" value="<?php echo $row ['tipe']; ?>" class="form-control" placeholder="No Telepon" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-6">
+                        <a href="catering.php" class="btn btn-sm btn-danger">Selesai</a>
+                    </div>
+
+                </div>
+            </form>
         </div>
-        <!-- /#page-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+	
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>
