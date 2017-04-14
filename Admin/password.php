@@ -153,7 +153,7 @@ $nama = $row['nama'];
                     if($password1 == $password2){
                         if(strlen($password1) >= 6){
                             $pass = md5($password1);
-                            $update = mysqli_query($conn, "UPDATE user SET password='$pass' WHERE iduser='$id'");
+                            $update = mysqli_query($conn, "UPDATE user SET password='$pass' WHERE iduser='$id");
                             if($update){
                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password berhasil dirubah.</div>';
                             }else{

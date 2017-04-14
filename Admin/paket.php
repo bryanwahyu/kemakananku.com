@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (empty($_SESSION)) {
     header("Location:../index.php");
 }
@@ -105,7 +104,7 @@ $nama = $row['nama'];
                         </ul>
                     </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="pembeli" class="collapse">
-                            <li>
+                            <li>ca
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
                             <li>
@@ -120,6 +119,43 @@ $nama = $row['nama'];
             </div>
             <!-- /.navbar-collapse -->
         </nav>
+        <?php 
+            if(isset($_GET['aksi'])=='promo'){
+            $id=$_GET['id'];
+            $cek=mysqli_query($conn,"SELECT * from paket where id='$id'");
+            if (mysqli_num_rows($cek)==1) {
+                $data=mysqli_query($conn,"SELECT promosi from paket,data_catering where paket.id='id' and kode_penjual=data_catering.id");
+                $rows=mysqli_fetch_assoc($data);
+            if ($rows['promosi']==0) {
+            $sql1=mysqli_query($conn,"UPDATE paket set promosi=1");
+            if ($sql1){
+                  echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">Promosi Sukses </div>';
+            }
+            else 
+            {
+             
+                echo'<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>promosi gagal diganti, silahkan coba lagi.</div>';
+             
+            }
+            }
+            else
+            {
+            $sql1=mysqli_query($conn,"UPDATE paket set promosi=0");
+            if ($sql1){
+                  echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">Pembatalan promisi sukses dibatalkan </div>';
+            }
+            else 
+            {
+                echo'<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>promosi gagal diganti, silahkan coba lagi.</div>';
+              
+
+            }
+                
+            }
+
+            }
+            }  
+        ?>
 
         <div id="page-wrapper">
 
@@ -139,24 +175,22 @@ $nama = $row['nama'];
                     </div>
                 </div>
                 <!-- /.row -->
-                <!-- /.row -->
-
        <table class="table table-hover">
     <thead>
       <tr>
         <th>id</th>
         <th>Nama Katering </th>
-        <th>Pemesanan</th>
-        <th>Paket yang Dipesan</th>
         <th>Promo</th>
-        <th>Pembeli </th>
-        <th>Lunas </th>
+        <th>Nama Paket</th>
+        <th>Paket </th>
+        <th>foto  </th>
         <th>Action</th>
+      
       </tr>
     </thead>
     <tbody>
     <?php
-    $viewq1=mysqli_query($conn,"SELECT * from ");
+    $viewq1=mysqli_query($conn,"SELECT * from paket ");
     if(mysqli_num_rows($viewq1) ==0){
                     echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
                 }else{
@@ -181,7 +215,8 @@ $nama = $row['nama'];
                         echo '
                             </td>
                             <td>
-                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a href="promo.php?Aksi=ganti&id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Ganti Promosi</a>
+                                
                                 <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>';

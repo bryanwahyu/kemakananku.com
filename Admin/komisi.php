@@ -154,8 +154,8 @@ $nama = $row['nama'];
     </thead>
     <tbody>
     <?php
-    $viewq1=mysqli_query($conn,"SELECT * FROM pesanan INNER JOIN data_pembeli ON pesanan.kodepembeli = data_pembeli.id INNER JOIN data_catering ON pesanan.`kodpenjual` = data_catering.id");
-
+    $viewq1=mysqli_query($conn,"SELECT pesanan.kodepembeli,pesanan.kodepenjual,pesanan.pembayaran,pesanan.total,data_catering.nama_catering, FROM pesanan INNER JOIN data_catering ON pesanan.`kodepenjual` = data_catering.id INNER join paket on paket.id = pesanan.kodepaket
+        ");
     if(mysqli_num_rows($viewq1) ==0){
                     echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
                 }else{
@@ -181,10 +181,11 @@ $nama = $row['nama'];
                         echo '
                             </td>
                             <td>
-                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a href="komisi.php?aksi=bayar&id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Pembayaran Komisi</a>
                                 <a href="view_catering.php?id='.$row['kodepenjual'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> penjual</a>
                             </td>
-                            <a href="view_pembeli.php?id='.$row['kodepembeli'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> pembeli</a>
+                            <a href="view_pembeli.php?id='.$row['kodepembeli'].'" title="View 
+                            Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> pembeli</a>
                             </td>
                         </tr>';
                 

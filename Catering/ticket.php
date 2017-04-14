@@ -1,10 +1,19 @@
-<?php
-    session_start();
-    
+<?php 
+session_start();
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
+}
+$user= $_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama_catering'];
+$aktif = $row['Aktif'];
+$id    = $row['id'];
+$kodeuser = $row['kode_user'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -14,16 +23,11 @@
     <meta name="author" content="">
 
     <title>Kemakananku Catering</title>
-
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -50,106 +54,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src=" pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin</a>
+                <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
+                <a class="navbar-brand" href="index.php">Kemakananku Catering </a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $nama; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="inbox.php"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="keluar.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -157,49 +78,50 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
-                  
-                     <li>
-                     <a href="javascript:;" data-toggle="collapse" data-target="#admin"><i class="fa fa-fw fa-user-secret"></i> Admin <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="admin" class="collapse">
-                            <li>
-                                <a href="index.php"><i class="fa fa-user-secret"></i> Data Admin</a>
-                            </li>
-                            <li>
-                                <a href="komisi.php"><i class="fa fa-money"></i> Pembagian Komisi </a>
-                            </li>
-                        </ul>
-                  
-                     </li>
                     <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="catering" class="collapse">
-                            <li>
-                                <a href="catering.php"><span class="glyphicon glyphicon-cutlery"></span> Data Catering</a>
+                            <li class="active">
+                                <a href="index.php"><span class="glyphicon glyphicon-cutlery"></span> Data Caterng</a>
                             </li>
                             <li>
-                                <a href="paket.php"><i class="fa fa-tasks"></i> Pengecekan Paket </a>
+                          <a href="menu.php"> <span class=" glyphicon glyphicon-book"></span> Data menu dan Promosi </a>
+                          </li>  
+                            <li>
+                                <a href="promosi.php"><i class="fa fa-cart"></i>
+                                Data Promosi </a>
                             </li>
+                             <li>
+                                <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
+                             </li>
+                             <li>
+                                <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
+                            </li>
+                            <li> 
+                                <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
+                        </ul>
+                      
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
-                        </ul>
-                    </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                      <ul id="pembeli" class="collapse">
+                        <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
+                            <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
+
                             <li>
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="active">
+                    <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
+                    
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </nav>
-
         <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -218,27 +140,63 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                <div>
+                
+ <?php
+            if(isset($_POST['kirim'])){
+                $subjek            = $_POST['nama'];
+                $isi               = $_POST['adu'];
+                $tipe              = $_POST['tipe'];
+ 
+                        $insert1=mysqli_query($conn,"INSERT INTO 
+                            tiket (subjek,isi,kodetipe,user ) VALUES ('$subjek','$nama',$tipe,$kodeuser)");
+                        if($insert1){
+                            echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Pengaduan Berhasil Di kirim silahkan menunggu nanti anda di telpon atau ditanya melalui SMS.</div>';
+                        }else{
+                            echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Ups, Pengaduan Gagal Di kirim !</div>';
 
+                    }
+                }
+            ?>
+            
+            <form class="form-horizontal" action="" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Subjek Bug</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" class="form-control" placeholder="Subjek" required>
+                    </div>
                 </div>
-
-             
-            </div>
-            <!-- /.container-fluid -->
-
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Isi Pengaduan Bug </label>
+                    <div class="col-sm-4">
+                <textarea required class="form-control" id="alamat3" rows="5" name="adu" placeholder="isi Pengaduan"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Tipe Pengaduan </label>
+                    <div class="col-sm-2">
+                        <select name="tipe" class="form-control" required>
+                            <?php  $sql = mysqli_query($conn,"SELECT * FROM tipe_kategori ORDER BY id ASC");
+    if(mysqli_num_rows($sql) != 0){
+        while($data = mysqli_fetch_assoc($sql)){
+            echo "<option value=$data[id]> $data[kategori]</option>";
+        }
+    }
+    ?>
+                        </select>
+                    </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-6">
+                        <input type="submit" name="kirim" class="btn btn-sm btn-primary" value="Simpan">
+                        <a href="index.php" class="btn btn-sm btn-danger">Batal</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <!-- /#page-wrapper -->
+  </div>
 
-    </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
 </body>
-
 </html>

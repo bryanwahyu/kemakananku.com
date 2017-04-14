@@ -8,6 +8,7 @@ $user=$_SESSION['username'];
 $query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
 $row = mysqli_fetch_assoc($query);
 $nama = $row['nama'];
+$idadmin =$row['id'];
 
 ?>
 <!DOCTYPE html>
@@ -144,22 +145,47 @@ $nama = $row['nama'];
                 </div>
 
                              <!-- /.row -->
+<?php
+if(isset($_GET['aksi']) == 'tanggap'){
+                $id = $_GET['id'];
+                    $cek =mysqli_query($conn,"SELECT * from tiket where id='$id'");
+                if(mysqli_num_rows($cek) == 0){
+                    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+                }else{  
+                    $sql = mysqli_query($conn,"UPDATE tiket set admin='$nama' where id='$id'");
+                    if($sql)
+                    {
+                        echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Anda harus menanggapi masalah ini .</div>';
+                    }
+                    else {
+                        echo '<div class="info alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Anda harus menanggapi masalah ini .</div>';
 
+                    }
+
+                }
+            }
+
+?>
        <table class="table table-hover">
     <thead>
-      <tr>
-        <th>id</th>
-        <th>username </th>
-        <th>Komentar</th>
-        <th>Tanggapin</th>
-        <th>tipe</th>
-        <th>Dibalas</th>
+          <tr>
+            <th>id</th>
+            <th>username </th>
+            <th>Subjek</th>
+            <th>Komentar</th>
+            <th>Tanggapin</th>
+            <?php if($idadmin<3)
+            { echo'<th> Nama </th>';}?>
+            <th>tipe</th>
+            
+                
+            
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
     <?php
-    $viewq1=mysqli_query($conn,"SELECT * from tiket inner join tipe_kategori on tiket.kodetipe=tipe_kategori.id inner join tiket.user=user.iduser");
+    $viewq1=mysqli_query($conn,"SELECT tiket.id,user.username,tipe_kategori.kategori,tiket.isi, tiket.subjek,tiket.admin from tiket inner join tipe_kategori on tiket.kodetipe=tipe_kategori.id inner join user on tiket.user=user.iduser");
     if(mysqli_num_rows($viewq1) ==0){
                     echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
                 }else{
@@ -169,20 +195,30 @@ $nama = $row['nama'];
                         <tr>
                             <td>'.$no.'</td>
                             <td>'.$row['username'].'</td>
-                            <td>'.$row['isi'].'</a></td>
-                            <td>'.$row['tanggap'].'</td>';
-                            if (isset($row['tanggap']))
+                            <td>'.$row['subjek'].'</td>
+                            <td>'.$row['isi'].'</td>';
+                            if ($row['admin']=="")
                             {
-                                echo'<td class="success"> sudah </td>';
+                               
+                                echo'<td class="danger">Belum </td>';
+                                    if ($idadmin<3) {
+                                echo '<td class="alert"> Belum ada </td>';
+                            }
                             }
                             else
-                            {
-                                echo'<td class="danger">Belum </td>';
+                            { echo'<td class="success"> sudah </td>'; 
+                                if ($idadmin<3) {
+                                echo '<td class="primary">'.$row['admin'].'</td>';
+                            }
+                           
                             } 
+                           
                         echo '
+
                             </td>
+                            <td>'.$row['kategori'].'</td>
                             <td>
-                            <a href="Tanggapin.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a href="ticket.php?aksi=tanggap&id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"> Tanggapin </span></a>
                             </td>
                         </tr>';
                 

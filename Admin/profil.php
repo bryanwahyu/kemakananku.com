@@ -145,12 +145,11 @@ $sql = mysqli_query($conn, "SELECT * FROM data_admin INNER JOIN USER ON data_adm
                 $id=$row['id'];
                 $iduser=$row['kode_user'];
                 if(isset($_POST['save'])){
-                $nama            = $_POST['nama'];
+                $namalengkap     = $_POST['nama'];
                 $no_telepon      = $_POST['no_telepon'];
-                $update = mysqli_query($conn, "UPDATE data_admin  SET nama='$nama', notelp='$no_telepon' WHERE id='$id'");
+                $update = mysqli_query($conn, "UPDATE data_admin  SET nama='$namalengkap', notelp='$no_telepon' WHERE id='$id'");
                if($update){
                   echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data berhasil disimpan.</div>';
-                  header("Location:catering.php");
                 }else{
                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data gagal disimpan, silahkan coba lagi.</div>';
                 }
@@ -173,25 +172,21 @@ $sql = mysqli_query($conn, "SELECT * FROM data_admin INNER JOIN USER ON data_adm
                 <div class="form-group">
                     <label class="col-sm-3 control-label">username</label>
                     <div class="col-sm-4">
-                        <input type="text" name="nama" value="<?php echo $row ['username']; ?>" class="form-control" placeholder="Nama" readony>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">username</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="nama" value="<?php echo $row ['username']; ?>" class="form-control" placeholder="Nama" readonly>
+                        <input type="text" name="user" value="<?php echo $row ['username']; ?>" class="form-control"  placeholder="Nama" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">email</label>
                     <div class="col-sm-4">
-                        <input type="email" name="nama" value="<?php echo $row ['email']; ?>" class="form-control" placeholder="Nama" readonly>
+                        <input type="email" value="<?php echo $row ['email']; ?>" class="form-control" placeholder="Nama" readonly>
                     </div>
                 </div>     
-                    <div class="col-sm-3">
-                    <b>Jabatan Sekarang :</b> <span class="label label-success"><?php echo $row['Job']; ?></span>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Jabatan</label>
+                    <div class="col-sm-4">
+                       <h3> <span  class="form-control label label-info "><?php echo $row ['Job']; ?>
+                        </span></h3>
                     </div>
-                </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">&nbsp;</label>

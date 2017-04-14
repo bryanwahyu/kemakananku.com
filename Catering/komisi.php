@@ -1,10 +1,16 @@
 <?php 
 session_start();
-if(empty($_SESSION))
-{ 
-header("Location:../index.php");
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
 }
-$user=$_SESSION['username'];
+$user= $_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama_catering'];
+$aktif = $row['Aktif'];
+$id    = $row['id'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -48,12 +54,12 @@ $user=$_SESSION['username'];
                     <span class="icon-bar"></span>
                 </button>
                 <img src="pict/logosmall.png" style="float:left;width:40px;height:40px;">
-                <a class="navbar-brand" href="index.html">Kemakananku Admin </a>
+                <a class="navbar-brand" href="index.php">Kemakananku Catering </a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $nama; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="profil.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -71,8 +77,6 @@ $user=$_SESSION['username'];
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" style="background-color:#e8e8e8;">
-                  
-                
                     <li><a href="javascript:;" data-toggle="collapse" data-target="#catering"><em class="fa fa-fw fa-truck"></em> Catering <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="catering" class="collapse">
                             <li class="active">
@@ -85,30 +89,34 @@ $user=$_SESSION['username'];
                                 <a href="promosi.php"><i class="fa fa-cart"></i>
                                 Data Promosi </a>
                             </li>
-                         <li>
+                             <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
-                            </li>
-                        </ul>
-                      <li>
+                             </li>
+                             <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
+                            <li> 
+                                <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
+                        </ul>
+                      
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
-                        </ul>
-                    </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                      <ul id="pembeli" class="collapse">
+                        <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
+                            <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
+
                             <li>
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
-                    </li>
                     <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
+                    
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -122,105 +130,15 @@ $user=$_SESSION['username'];
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Catering  <small>Selamat Datang</small>
+                           Catering  <small></small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-secret"></i> Data Catering                      </li>
+                                <i class="fa fa-user-secret"></i> Data Komisi                    </li>
                         </ol>
                     </div>
                 </div>
- <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-money fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><? ?></div>
-                                        <div>Komisi belum dibayar  </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="komisi.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">lihat detil</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-tasks fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php ?></div>
-                                        <div>paket</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="paket.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Paket</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-shopping-cart fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>Pesanan </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pesanan.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Pesanan </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-ticket fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>data pembeli dari paket </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pembeli.php ">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Lihat Pembeli </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
+
 
              
             </div>

@@ -1,10 +1,16 @@
 <?php 
 session_start();
-if(empty($_SESSION))
-{ 
-header("Location:../index.php");
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
 }
-$user=$_SESSION['username'];
+$user= $_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama_catering'];
+$aktif = $row['Aktif'];
+$id    = $row['id'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -37,7 +43,6 @@ $user=$_SESSION['username'];
 
     <div id="wrapper">
 
-      
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color : #ec971f;" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -87,15 +92,18 @@ $user=$_SESSION['username'];
                              <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
                              </li>
-                        </ul>
-                      <li>
+                             <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
+                            <li> 
+                                <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
+                        </ul>
+                      
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
                         <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                    </li>  <ul id="pembeli" class="collapse">
+                            <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
@@ -104,12 +112,9 @@ $user=$_SESSION['username'];
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
-                    </li>
-                    <ul>
                     <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
-                    </ul>
                     
                     
                 </ul>
@@ -122,107 +127,97 @@ $user=$_SESSION['username'];
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
+    <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Catering  <small>Selamat Datang</small>
+                            Pembeli  <small> Data </small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user-secret"></i> Data Catering                      </li>
+                          <i class="fa fa-users"></i> Data Pembeli
+                            </li>
                         </ol>
                     </div>
                 </div>
- <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-money fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><? ?></div>
-                                        <div>Komisi belum dibayar  </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="komisi.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">lihat detil</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-tasks fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php ?></div>
-                                        <div>paket</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="paket.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Paket</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-shopping-cart fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>Pesanan </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pesanan.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Detail Pesanan </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-ticket fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>data pembeli dari paket </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="pembeli.php ">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Lihat Pembeli </span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <!-- /.row -->
+
+                             <!-- /.row -->
+
+       <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Nama user </th>
+        <th>No Telpon </th>
+        <th>Alamat</th>
+        <th>Alergi</th>
+        <th>Tipe</th>
+        <th>Perkerjaan</th>
+        <th>sudah Lunas </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    $viewq1=mysqli_query($conn,"SELECT pesanan.lunas ,data_pembeli.nama,data_pembeli.notelp,tipe_customer.tipe,data_pembeli.alamat,data_pembeli.first_login, data_pembeli.alergi,data_pembeli.Perkerjaan from pesanan inner join data_pembeli on data_pembeli.id=pesanan.kodepembeli inner join tipe_customer on tipe_customer.id= data_pembeli.tipe_customer where kodepenjual='$id'");
+    if(mysqli_num_rows($viewq1) ==0){
+                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
+                }else{
+                    $no = 1;
+                    while($data =mysqli_fetch_assoc($viewq1)){
+                        echo '
+                        <tr>
+                            <td>'.$no.'</td>
+                            <td>'.$data['nama'].'</td>
+                            <td>'.$data['notelp'].'</td>
+                            <td>'.$data['alamat'].'</td>
+                            <td>'.$data['alergi'].'</td>
+                            <td>'.$data['tipe'].'</td>
+                            <td>'.$data['Perkerjaan'].'</td>';
+                            if ($data['lunas']==0)
+                            {
+                                echo'<td class="danger"> Belum dibayar </td>';
+                            }
+                            else
+                            {
+                                echo'<td class="success"> sudah lunas</td>';
+                            } 
+                        echo '<td>  
+                            <a href="checkutang.php?id='.$data['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> cek utang </a>';
+                        echo'   
+                                <a href="view_pembeli.php?id='.$data['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> view pembeli dan chek Pembayaran</a>
+                            </td>
+                        </tr>';
+                
+                    $no++;
+           
+                    }
+                }
+        ?>
+
+    </tbody>
+    </table>
+        
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+</body>
+
+</html>
                 <!-- /.row -->
 
              

@@ -155,7 +155,7 @@ $nama = $row['nama'];
 						$pass = md5($pass1);
 						$insert1=mysqli_query($conn,"INSERT INTO user (username,password,email,kode_akses) VALUES ('$username','$pass','$email',1) ");
 						$lastid=mysqli_insert_id($conn);
-						$insert2=mysqli_query($conn,"INSERT INTO data_admin (nama,Job,notelp,kode_user) VALUES ('$nama','$jabatan',$no_telepon,$lastid)");
+						$insert2=mysqli_query($conn,"INSERT INTO data_admin ( nama,Job,notelp,kode_user) VALUES ('$nama','$jabatan',$no_telepon,$lastid)");
 						if($insert1 && $insert2){
 							echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data Admin Berhasil Di Simpan.</div>';
 						}else{

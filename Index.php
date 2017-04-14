@@ -31,10 +31,13 @@ if ($_SESSION) {
                 <a href="promo.php">Home</a>
               </li>
               <li>
-                <a href="menukatering.php">Cari Katering<br></a>
+                  <a href="menu.php">Cari Menu </a>
               </li>
               <li>
-                <a href="">Contact Us</a>
+                <a href="menukatering.php">Cari Katering</a>
+              </li>
+              <li>
+                <a href="info.php">Contact Us</a>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account&nbsp;<i class="fa fa-caret-down text-inverse"></i></a>

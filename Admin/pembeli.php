@@ -146,44 +146,46 @@ $nama = $row['nama'];
     <thead>
       <tr>
         <th>id</th>
-        <th>Nama Katering </th>
-        <th>Pemesanan</th>
-        <th>Paket yang Dipesan</th>
-        <th>Promo</th>
-        <th>Pembeli </th>
-        <th>Lunas </th>
+        <th>Nama user </th>
+        <th>No Telpon </th>
+        <th>Alamat</th>
+        <th>Alergi</th>
+        <th>Tipe</th>
+        <th>Perkerjaan</th>
+        <th>sudah Login </th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
     <?php
-    $viewq1=mysqli_query($conn,"SELECT * from ");
+    $viewq1=mysqli_query($conn,"SELECT data_pembeli.id ,data_pembeli.nama,data_pembeli.notelp,tipe_customer.tipe,data_pembeli.alamat,data_pembeli.first_login, data_pembeli.alergi,data_pembeli.Perkerjaan from data_pembeli inner join tipe_customer on tipe_customer.id= data_pembeli.tipe_customer");
     if(mysqli_num_rows($viewq1) ==0){
                     echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
                 }else{
                     $no = 1;
-                    while($row =mysqli_fetch_assoc($viewq1)){
+                    while($data =mysqli_fetch_assoc($viewq1)){
                         echo '
                         <tr>
                             <td>'.$no.'</td>
-                            <td>'.$row['nama_catering'].'</td>
-                            <td>'.$row['username'].'</a></td>
-                            <td>'.$row['email'].'</td>
-                            <td>'.$row['pemilik'].'</td>
-                            <td>'.$row['notelp'].'</td>';
-                            if ($row['Aktif']==0)
+                            <td>'.$data['nama'].'</td>
+                            <td>'.$data['notelp'].'</td>
+                            <td>'.$data['alamat'].'</td>
+                            <td>'.$data['alergi'].'</td>
+                            <td>'.$data['tipe'].'</td>
+                            <td>'.$data['Perkerjaan'].'</td>';
+                            if ($data['first_login']==0)
                             {
-                                echo'<td class="danger"> Belum Aktif </td>';
+                                echo'<td class="danger"> Belum Pernah mengunjungin </td>';
                             }
                             else
                             {
-                                echo'<td class="success"> Akitf </td>';
+                                echo'<td class="success"> sudah pernah </td>';
                             } 
                         echo '
-                            </td>
-                            <td>
-                            <a href="pembayaran.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            </td>';                           
+                            /*<a href="checkutang.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>*/
+                        echo'<td>
+                                <a href="view_pembeli.php?id='.$data['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>';
                 

@@ -92,10 +92,13 @@ $id    = $row['id'];
                              <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
                              </li>
-                        </ul>
-                      <li>
+                             <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
+                            <li> 
+                                <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
+                        </ul>
+                      
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
@@ -316,7 +319,8 @@ $id    = $row['id'];
                 </div>           
             </div>
             <div class="form-group">
-            <?php echo                                 '<a href="profile.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit profile </a>'
+            <?php echo                                 '<a href="profile.php" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit profile </a>
+            <a href="chekrekening.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> Check Rekening </a>';
 ?>
             
             </div>

@@ -415,21 +415,14 @@
                <center>
                   <h3> Follow Us And Like Us </h3>
                   <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                  <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
                   <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                  <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-      `   </center>
+                 </center>
               </div>
             
           <div class="row">
           <center>
           <p style="color:#521078" class="container">
           Design by Bagus Hilmawan Copyright by &copy; Kemakananku.com 
-          </p>
-          </center>
-          <center>
-          <p style="color:#521078" class="container"> 
-          This Web need supported by LAVAREL , JAVASCRIPT ,MARIADB AND PHP
           </p>
           </center>
          </div>      

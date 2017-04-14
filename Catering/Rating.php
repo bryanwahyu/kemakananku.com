@@ -1,10 +1,16 @@
 <?php 
 session_start();
-if(empty($_SESSION))
-{ 
-header("Location:../index.php");
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
 }
-$user=$_SESSION['username'];
+$user= $_SESSION['username'];
+$query=mysqli_query($conn,"SELECT * from data_catering,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama_catering'];
+$aktif = $row['Aktif'];
+$id    = $row['id'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -86,15 +92,18 @@ $user=$_SESSION['username'];
                              <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
                              </li>
-                        </ul>
-                      <li>
+                             <li>
                                 <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
+                            <li> 
+                                <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
+                        </ul>
+                      
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
                             </li>
                         <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
-                    </li>  <ul id="pembeli" class="collapse">
+                            <ul id="pembeli" class="collapse">
                             <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
@@ -103,12 +112,9 @@ $user=$_SESSION['username'];
                                 <a href="pemesanan.php"><i class="fa fa-cart"></i> Pengecekan Pesanan </a>
                             </li>
                         </ul>
-                    </li>
-                    <ul>
                     <li>
                         <a href="ticket.php"><i class="fa fa-fw fa-ticket"></i> ticket</a>
                     </li>
-                    </ul>
                     
                     
                 </ul>

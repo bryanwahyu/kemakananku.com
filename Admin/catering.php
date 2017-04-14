@@ -81,7 +81,7 @@ $nama = $row['nama'];
                   
                      <li>
                      <a href="javascript:;" data-toggle="collapse" data-target="#admin"><i class="fa fa-fw fa-user-secret"></i> Admin <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="admin" class="collapse">
+                        <ul id="admin" class="collapse" >
                             <li class="active">
                                 <a href="index.php"><i class="fa fa-user-secret"></i> Data Admin</a>
                             </li>
@@ -138,6 +138,44 @@ $nama = $row['nama'];
                         </ol>
                     </div>
                 
+             <?php   
+            if(isset($_GET['aksi']) == 'aktif'){
+                $id = $_GET['id'];
+                $cek = mysqli_query($conn, "SELECT * from data_catering  WHERE id='$id'");
+                if(mysqli_num_rows($cek) == 0){
+                    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+                }else{
+                    $aktif = mysqli_query($conn, "UPDATE data_catering set Aktif=1 where id='$id'");
+
+                    if($aktif){
+
+
+                        echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Catering diaktifkan.</div>';
+
+                    }else{
+                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Catering gagal di aktifkan .</div>';
+                    }
+                }
+            }
+             if(isset($_GET['blokir'])=='blokir'){
+             $id = $_GET['id'];
+                $cek = mysqli_query($conn, "SELECT * from data_catering  WHERE id='$id'");
+                if(mysqli_num_rows($cek) == 0){
+                    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+                }else{
+                    $aktif = mysqli_query($conn, "UPDATE data_catering set Aktif=0  where id='$id'");
+
+                    if($aktif){
+
+
+                        echo '<div class="alert alert-warning  alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Catering diblokir.</div>';
+
+                    }else{
+                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Catering gagal diblokir .</div>';
+                    }
+                }   
+            }
+            ?>
                  <table class="table table-hover">
     <thead>
       <tr>
@@ -178,8 +216,16 @@ $nama = $row['nama'];
                         echo '
                             </td>
                             <td>
-                                <a href="aktifcatering.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Aktif Catering <span class="caret"></span>
+  </button>
+                                    <ul class="dropdown-menu">
+                                 <li class=btn-info><a href="catering.php?aksi=aktif&id='.$row['id'].'"title ="Aktifkan Catering"><i class="fa fa-bullseye"></i> Aktifkan Catering</a></li>
+                                    <li class="btn-warning"><a href="catering.php?blokir=blokir&id='.$row['id'].'" title ="Blokir Catering"><i class="fa fa-ban"></i>   Blokir Catering</a></li>
+                                    </ul>
+                                      <a href="view_catering.php?id='.$row['id'].'" title="View Data" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Lihat Katering </a>
+                                  </div>
                             </td>
                         </tr>';
                 

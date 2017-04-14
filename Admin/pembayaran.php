@@ -181,7 +181,7 @@ $nama = $row['nama'];
                     <div class="col-sm-4">
                         <input type="text" name="nama" value="<?php echo $namapaket; ?>" class="form-control" placeholder="Nama" readonly>
                     </div>
-                </div>
+                </div>      
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Biaya Komisi  </label>
                     <div class="col-sm-4">
@@ -196,8 +196,14 @@ $nama = $row['nama'];
                             <option value="1">Bayar Komisi</option>
                         </select>
                     </div>
+
+                </div>/
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Pembayaran Komisi</label>
+                    <img src="<?echo $row['bukti']?>" style="width: 150px; height: 150px;">
                 </div>
-                </div>
+
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">&nbsp;</label>

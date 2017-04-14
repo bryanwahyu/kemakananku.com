@@ -148,11 +148,11 @@ $nama = $row['nama'];
                 $row = mysqli_fetch_assoc($sql);
             }
             if(isset($_POST['save'])){
-                $nama            = $_POST['nama'];
+                $namalengkap     = $_POST['nama'];
                 $no_telepon      = $_POST['no_telepon'];
                 $jabatan         = $_POST['jabatan'];
                 
-                $update = mysqli_query($conn, "UPDATE data_admin  SET nama='$nama', notelp='$no_telepon', Job='$jabatan' WHERE id='$id'");
+                $update = mysqli_query($conn, "UPDATE data_admin  SET nama='$namalengkap', notelp='$no_telepon', Job='$jabatan' WHERE id='$id'");
                 if($update){
                   echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data berhasil disimpan.</div>';
                 }else{

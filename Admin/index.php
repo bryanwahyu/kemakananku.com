@@ -1,17 +1,17 @@
-<?php
+ <?php
 session_start();
 if (empty($_SESSION)) {
     header("Location:../index.php");
 }
-include 'konfigurasi/database.php';
-$user=$_SESSION['username'];
-$query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
-$row = mysqli_fetch_assoc($query);
+    include 'konfigurasi/database.php';
+    $user=$_SESSION['username'];
+    $query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
+    $row = mysqli_fetch_assoc($query);
 $nama = $row['nama'];
 $idadmin =  $row['id'];
-$query1=mysqli_query($conn,"SELECT * from tagihan");
+$query1=mysqli_query($conn,"SELECT * from pesanan");
 $count1=mysqli_num_rows($query1);
-$query2=mysqli_query($conn,"SELECT * from data_catering where aktif=0");
+$query2=mysqli_query($conn,"SELECT * from data_catering");
 $count2=mysqli_num_rows($query2);
 $query3= mysqli_query($conn,"SELECT * from  tiket ");
 $count3= mysqli_num_rows($query3);
@@ -106,7 +106,7 @@ $count4= mysqli_num_rows($query4);
                                 <a href="catering.php"><span class="glyphicon glyphicon-cutlery"></span> Data Catering</a>
                             </li>
                             <li>
-                                <a href="paket.php"><i class="fa fa-tasks"></i> Pengecekan Paket </a>
+                                <a href="paket.php"><i class="fa fa-tasks"></i>Pengecekan Paket </a>
                             </li>
                             <li>
                                 <a href="rating.php"><i class="fa fa-star"></i> Rating </a>
@@ -156,7 +156,7 @@ $count4= mysqli_num_rows($query4);
                                         <i class="fa fa-money fa-5x"></i>
                                     </div>
                                   <div class="col-xs-9 text-right">
-                                        <div class="huge"><? echo $count1; ?></div>
+                                        <div class="huge"><?php echo $count1; ?></div>
                                         <div>Komisi </div>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@ $count4= mysqli_num_rows($query4);
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><?echo $count2;?></div>
+                                        <div class="huge"><?php  echo $count2;?></div>
                                         <div>data Catering </div>
                                     </div>
                                 </div>
@@ -200,7 +200,7 @@ $count4= mysqli_num_rows($query4);
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><? echo $count4;?></div>
+                                        <div class="huge"><?php echo $count4;?></div>
                                         <div>Pesanan </div>
                                     </div>
                                 </div>
@@ -222,12 +222,12 @@ $count4= mysqli_num_rows($query4);
                                         <i class="fa fa-ticket fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><?echo $count3;?></div>
+                                        <div class="huge"><?php echo $count3;?></div>
                                         <div>Pengaduan</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="Pengaduan ">
+                            <a href="ticket.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">Lihat Pengaduan </span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -303,8 +303,7 @@ $count4= mysqli_num_rows($query4);
                             <td>'.$row['Job'].'</td>
                             <td>'.$row['notelp'].'</td>';
                         echo '
-                            </td>
-                            <td>
+                           <td>
                               '; if($idadmin<5)
                               {  
                              echo'
