@@ -145,18 +145,12 @@ $kodeuser = $row['iduser'];
                 $nama            = $_POST['atasnama'];
                 $norek           = $_POST['no_rek'];
                 $bank            = $_POST['bank'];
-                $pass1           = $_POST['pass1'];
-                $pass            =md5($pass1);
-                $cek = mysqli_query($conn, "SELECT * FROM user WHERE password='$pass' and iduser ='$kodeuser' ");
-                if(mysqli_num_rows($cek) == 1){
                         $insert1=mysqli_query($conn,"INSERT INTO detail_bank (norek,atasnama,kode_bank,kode_penjual ) VALUES ($norek,'$nama',$bank,$id)");
                         if($insert1){
                             echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data bank Berhasil Di Simpan.</div>';
                         }else{
                             echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Ups, Data bank Gagal Di simpan !</div>';
 
-                    } else{
-                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Password salah coba lagi !</div>';
                     }
                 }
             ?>
@@ -187,12 +181,6 @@ $kodeuser = $row['iduser'];
     ?>
                         </select>
                     </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Konfirmasi Password</label>
-                    <div class="col-sm-2">
-                        <input type="password" name="pass1" class="form-control" placeholder="Konfirmasi password">
-                    </div>
-                </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">&nbsp;</label>
                     <div class="col-sm-6">

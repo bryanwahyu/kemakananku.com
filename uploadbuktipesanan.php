@@ -142,20 +142,14 @@ $kodeuser = $row['iduser'];
                 </div>
 
     <?php
-                $folder     = '/pict/makanan/';
+                $folder     = '/pict/bukti/';
                 $file_type  = array('jpg','jpeg','png','gif','bmp','PNG','JPG','JPEG','GIF','BMP');
-                $max_size   = 1000000; 
+                $max_size   =500000; 
                 
             if(isset($_POST['add'])){
-                $namabelum            = $_POST['nama'];
-                $nama =mysqli_real_escape_string ( $conn ,$namabelum );
-
-                $deskripsibelum       = $_POST['deskripsi'];         
-                $deskripsi =mysqli_real_escape_string ( $conn ,$deskripsibelum );
-
-
-                $hargabelum           = $_POST['harga'];
-                $harga= str_replace(".", "", $hargabelum);
+                $nama            = $_POST['nama'];
+                $deskripsi       = $_POST['deskripsi'];         
+                $harga           = $_POST['harga'];
                 $file_name  = $_FILES['filefoto']['name'];
                 $file_size  = $_FILES['filefoto']['size'];
     //cari extensi file dengan menggunakan fungsi explode
@@ -177,24 +171,23 @@ $kodeuser = $row['iduser'];
 define ('SITE_ROOT', realpath(dirname(__FILE__)));
            
          $auto=1;
-         $kodegambar=$id.'-'.$auto;
+         $kodegambar=$id.'-'.$auto.'-'.$kodepembeli;
         $pindah=$kodegambar.".".$extensi;
-        $folders='pict/makanan/';
+        $folders='pict/bukti/';
          while (file_exists($folders.$pindah)){
             
              $auto=$auto+1;   
-             $kodegambar=$id.'-'.$auto;
+             $kodegambar=$id.'-'.$auto.'-'.$kodepembeli;
              $pindah=$kodegambar.".".$extensi;        
 }
         if(move_uploaded_file($_FILES['filefoto']['tmp_name'],SITE_ROOT.$folder.$pindah)){
         $link=$pindah;
-       $insert1=mysqli_query($conn,"INSERT INTO makanan (nama,deskripsi,harga,link,kodepenjual) VALUES ('$nama','$deskripsi',
-        $harga,'$link',$id)");
+       $insert1=mysqli_query($conn,"update pesanan set (nama,deskripsi,harga,link,kodepenjual) VALUES ('$nama','$deskripsi','$harga','$link','$id')");
 
                         if($insert1){
-                            echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data makanan Berhasil Di Simpan.</div>';
+                            echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Bukti Pembayaran Berhasil Di Simpan.</div>';
                         }else{
-                            echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Ups, Data Makanan Gagal Di simpan !</div>';
+                            echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Ups, Bukti Pembayaran Gagal Di simpan !</div>';
 
                     }
                 }
@@ -206,31 +199,63 @@ define ('SITE_ROOT', realpath(dirname(__FILE__)));
       }
       
              ?>
+            <?php 
             
+    $viewq1=mysqli_query($conn,"SELECT link.pesanan kodepenjual.pesanan from detail_bank,bank where kode_penjual ='$id' and bank.id=detail_bank.kode_bank");
+            $data=mysqli_fetch_assoc($viewq1);
+            
+            ?>
             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <h1> pesanan</h1>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Nama Makanan</label>
+                    <label class="col-sm-3 control-label">kode</label>
                     <div class="col-sm-4">
-                        <input type="text" name="nama" class="form-control" placeholder="Makanan" required>
+                        <input type="text" name="nama" class="form-control" placeholder="Makanan" value="<?php echo $rows['tagihan'];  ?>" readonly>
+                    </div>
+                </div>
+
+
+            <h1> data makanan / Paket  </h1>
+            <?php if($paket=1)
+        {
+
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">makanan</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" class="form-control" placeholder="Makanan" value="<?php echo $data['nama'];  ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Deskripsi</label>
+                    <label class="col-sm-3 control-label">jumlah</label>
                     <div class="col-sm-4">
-                        <textarea name="deskripsi" rows="5"  class="form-control" placeholder="Deskripsi Makanan " required></textarea> 
+                        <input type="number" name="jumlah" class="form-control" placeholder="Makanan" value="<?php echo $rows['total'];  ?>" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Katering</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="katering" class="form-control" placeholder="Makanan" value="<?php echo $catering[''];  ?>" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Pembeli</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" class="form-control" placeholder="Makanan" value="<?php echo $data[''];  ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Harga</label>
-                    
+                    <label class="col-sm-3 control-label">total Harga</label>
                     <div class="input-group col-sm-3">
                     <span class="input-group-addon">Rp</span>
-                    <input type="text" name="harga"  class="form-control" onkeyup="javascript:tandaPemisahTitik(this);" onkeydown="return numbersonly(this, event);" aria-label="rupiah">
+                    <input type="text" name="harga"  class="form-control" onkeyup="javascript:tandaPemisahTitik(this);" onkeydown="return numbersonly(this, event);"" value="<?php echo $rows['total'];?>" aria-label="rupiah" readonly>
                     <span class="input-group-addon">.00</span>
                     </div>
                     </div>
                     <div class="form-group">
-                    <label class="col-sm-3 control-label">Input file foto MAX 1 Mb :</label>
+                    <label class="col-sm-3 control-label">Input file foto MAX 500 Kb :</label>
                     <div class="col-sm-2">
                         <input type="file" name="filefoto">
                     </div>

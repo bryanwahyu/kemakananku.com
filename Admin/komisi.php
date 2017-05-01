@@ -8,7 +8,7 @@ $user=$_SESSION['username'];
 $query=mysqli_query($conn,"SELECT * from data_admin,user WHERE (username='$user' or email= '$user') and iduser = kode_user limit 1 ");
 $row = mysqli_fetch_assoc($query);
 $nama = $row['nama'];
-
+$folder='../pict/bukti';
 ?>
 <!DOCTYPE html>
 <head>

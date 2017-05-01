@@ -104,7 +104,7 @@ $nama = $row['nama'];
                         </ul>
                     </li> <li><a href="javascript:;" data-toggle="collapse" data-target="#pembeli"><em class="fa fa-fw fa-users"></em> Pembeli <em class="fa fa-fw fa-caret-down"></em></a>
                       <ul id="pembeli" class="collapse">
-                            <li>ca
+                            <li>
                                 <a href="pembeli.php"><i class="fa fa-users"> </i> Data Pembeli</a>
                             </li>
                             <li>

@@ -146,18 +146,16 @@ $id    = $row['id'];
                 }else
                 {
 
-            }
+            
 
         
-                if($aktif==1)
-        {
             if(isset($_GET['aksi']) == 'delete'){
-                $id = $_GET['id'];
-                $cek = mysqli_query($conn, "SELECT * from detail_bank  WHERE id='$id'");
+                $kodeid = $_GET['id'];
+                $cek = mysqli_query($conn, "SELECT * from detail_bank  WHERE id='$kodeid'");
                 if(mysqli_num_rows($cek) == 0){
                     echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
                 }else{
-                    $delete = mysqli_query($conn, "DELETE from detail_bank where id='$id'");
+                    $delete = mysqli_query($conn, "DELETE from detail_bank where id='$kodeid'");
                     if($delete){
 
 
@@ -168,11 +166,8 @@ $id    = $row['id'];
                     }
                 }
             }
-        }
-        if($aktif==1)
-        {
     echo'<a class="btn btn-primary" href="add_rekening.php"><i class="fa fa-user-plus" > </i> Tambah rekening </a>';
-        }
+   }     
     ?>
   <table class="table table-hover">
     <thead>
@@ -187,7 +182,7 @@ $id    = $row['id'];
     <tbody>
     <?php
     $viewq1=mysqli_query($conn,"SELECT detail_bank.id,bank.bank,detail_bank.norek,detail_bank.atasnama from detail_bank,bank where kode_penjual ='$id' and bank.id=detail_bank.kode_bank");
-    if(mysqli_num_rows($viewq1) ==0){
+    if(mysqli_num_rows($viewq1)==0){
                     echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
                 }else{
                     $no = 1;
@@ -206,7 +201,7 @@ $id    = $row['id'];
                              <div class="btn-group">
                                 <a href="edit_rekening.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"> Edit Rekening </span></>
 
-                            <a href="chekrekening.php?aksi=delete&id='.$row['id'].'title="Hapus Data" onclick="return confirm(\'Anda yakin akan menghapus data rekening '.$row['atasnama'].'?/\)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Hapus Rekening </a>
+                            <a href="chekrekening.php?aksi=delete&id='.$row['id'].'" title="Hapus Data"  class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Hapus Rekening </a>
                             </div>
                             </td>
                         </tr>';

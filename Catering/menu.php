@@ -154,11 +154,16 @@ $folder='../pict/makanan/';
         {
             if(isset($_GET['aksi']) == 'delete'){
                 $idkode = $_GET['id'];
-                $cek = mysqli_query($conn, "SELECT * from makana  WHERE id='$idkode'");
+                $cek = mysqli_query($conn, "SELECT * from makanan  WHERE id='$idkode' limit 1");
+                $rows=mysqli_fetch_assoc($cek);
                 if(mysqli_num_rows($cek) == 0){
+
                     echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+
                 }else{
+                    unlink($folder.$rows['link']);
                     $delete = mysqli_query($conn, "DELETE from makanan where id='$idkode'");
+                    
                     if($delete){
 
 
@@ -199,9 +204,9 @@ $folder='../pict/makanan/';
                             <td>'.$no.'</td>
                             <td>'.$row['nama'].'</td>
                             <td>'.$row['deskripsi'].'</td>
-                            <td>'.$row['harga'].'</td>
+                            <td>Rp'.number_format($row['harga'],0,",",".").'</td>
                             <td> <img src="'.$folder.$row['link'].'" width="100px" height="100px"</td>';
-                        echo '
+                       echo '
                            <td>
                               '; if($aktif==1)
                               {  
@@ -213,7 +218,7 @@ $folder='../pict/makanan/';
                             </td>
                         </tr>';
                     }
-                }
+       $no++;         }
             }
 
             

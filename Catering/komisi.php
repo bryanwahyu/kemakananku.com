@@ -11,6 +11,7 @@ $row = mysqli_fetch_assoc($query);
 $nama = $row['nama_catering'];
 $aktif = $row['Aktif'];
 $id    = $row['id'];
+$folder='../pict/bukti/';
 ?>
 <!DOCTYPE html>
 <head>
