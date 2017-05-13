@@ -11,6 +11,7 @@ $row = mysqli_fetch_assoc($query);
 $nama = $row['nama_catering'];
 $aktif = $row['Aktif'];
 $id    = $row['id'];
+$folder = '../pict/logo/';
 ?>
 <!DOCTYPE html>
 <head>
@@ -215,6 +216,13 @@ $id    = $row['id'];
                         <input type="text" name="no_telepon" value="<?php echo $row ['notelp']; ?>" class="form-control" placeholder="No Telepon">
                     </div>
                 </div>
+                                <div class="form-group">
+                    <label class="col-sm-3 control-label">Logo </label>
+                    <div class="col-sm-4">
+   
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">username</label>
                     <div class="col-sm-4">

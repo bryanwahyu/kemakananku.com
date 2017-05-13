@@ -156,6 +156,7 @@ $kodeuser = $row['iduser'];
 
                 $hargabelum           = $_POST['harga'];
                 $harga= str_replace(".", "", $hargabelum);
+                $min = $_POST['min'];
                 $file_name  = $_FILES['filefoto']['name'];
                 $file_size  = $_FILES['filefoto']['size'];
     //cari extensi file dengan menggunakan fungsi explode
@@ -188,8 +189,8 @@ define ('SITE_ROOT', realpath(dirname(__FILE__)));
 }
         if(move_uploaded_file($_FILES['filefoto']['tmp_name'],SITE_ROOT.$folder.$pindah)){
         $link=$pindah;
-       $insert1=mysqli_query($conn,"INSERT INTO makanan (nama,deskripsi,harga,link,kodepenjual) VALUES ('$nama','$deskripsi',
-        $harga,'$link',$id)");
+       $insert1=mysqli_query($conn,"INSERT INTO makanan (nama,deskripsi,harga,link,kodepenjual,min) VALUES ('$nama','$deskripsi',
+        $harga,'$link',$id,$min)");
 
                         if($insert1){
                             echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data makanan Berhasil Di Simpan.</div>';
@@ -233,6 +234,13 @@ define ('SITE_ROOT', realpath(dirname(__FILE__)));
                     <label class="col-sm-3 control-label">Input file foto MAX 1 Mb :</label>
                     <div class="col-sm-2">
                         <input type="file" name="filefoto">
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                    <label class="col-sm-3 control-label">Minimal pemesanan:</label>
+                    <div class="col-sm-2">
+                        <input type="text" name="min" class="form-control" value="1"  onkeydown="return numbersonly(this, event);">
                     </div>
                 </div>
                 <div class="form-group">

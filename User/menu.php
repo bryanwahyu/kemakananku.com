@@ -84,15 +84,19 @@ $count=mysqli_num_rows($query1);
               <li>
                 <a href="index.php">Home</a>
               </li>
+              <!--
               <li>
-                <a href="catering.php">Cari Katering<br></a>
-              </li>
+                <a href="katering.php">Cari Katering<br></a>
+              </li>-->
               
               <li class="active">
                 <a href="menu.php">Melihat Menu/Paket</a>
               </li>
               <li>
-                <a href="his.php"> Sejarah </a>
+                <a href="his.php"> Tentang Kami </a>
+              </li>
+              <li>
+                <a href="cart.php"> Keranjang <?php echo'';?> </a>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nama; ?><i class="fa fa-caret-down text-inverse"></i></a> 
@@ -194,7 +198,7 @@ $folderm='../pict/makanan/';
                     echo'<div class="col-md-3">
                         <div class="thumbnail">
                             <div class="caption">
-                              <a><img src="'.$folderm.''.$data['link'].'"class="img-responsive"></a>
+                              <a><img src="'.$folderm.''.$data['link'].'"class="img-responsive" style="border:0px; width:300px; height:300px;"></a>
                                   <h5>'.$data['nama'].'</h5>
                               <h6>Oleh : </h6>
                               <p>'.$data['nama_catering'].'</p>

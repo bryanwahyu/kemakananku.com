@@ -1,4 +1,4 @@
- <?php 
+<?php 
 session_start();
 include 'konfigurasi/database.php';
 if (empty($_SESSION)) {
@@ -11,7 +11,8 @@ $row = mysqli_fetch_assoc($query);
 $nama = $row['nama_catering'];
 $aktif = $row['Aktif'];
 $id    = $row['id'];
-$folder='../pict/paket/';
+$kodeuser = $row['iduser'];
+$folder='../pict/makanan/';
 ?>
 <!DOCTYPE html>
 <head>
@@ -94,7 +95,7 @@ $folder='../pict/paket/';
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
                              </li>
                              <li>
-                                <a href="paket.php"><i class="fa fa-tasks"></i> Paket  </a>
+                                <a href="paket.php"><i class="fa fa-tasks"></i> data Paket  </a>
                             </li>
                             <li> 
                                 <a href="chekrekening.php"><i class="fa fa-bank"></i> Cek Rekening </a>
@@ -122,134 +123,102 @@ $folder='../pict/paket/';
             </div>
             <!-- /.navbar-collapse -->
         </nav>
-        <div id="page-wrapper">
+   
+ <div id="page-wrapper">
 
-            <div class="container-fluid">
+            <div class="container-fluid"> 
 
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Catering  <small>Selamat Datang</small>
+                           Catering  <small>Makanan</small>
                         </h1>
                         <ol class="breadcrumb">
-                            <li class="active">      Paket </li>              </ol>
+                            <li class="active">
+                                <i class="fa fa-user-secret"></i> Data Makanan</li>
+                        </ol>
                     </div>
-                </div>
-
-
+            </div>
 <?php
-                if($aktif==0){
-                    echo '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Maaf anda belum aktif mohon hubungi ke Pihak kemakananku </div>';
-                }else
-                {
-
+            $idkode = $_GET['id'];
+            $sql = mysqli_query($conn, "SELECT * FROM Makanan WHERE id='$idkode'");
+            if(mysqli_num_rows($sql) == 0){
+                header("Location: chekrekening.php");
+            }else{
+                $data = mysqli_fetch_assoc($sql);
             }
-
+            if(isset($_POST['save'])){  
         
-                if($aktif==1)
-        {
-            if(isset($_GET['aksi']) == 'delete'){
-                $idkode = $_GET['id'];
-                $cek = mysqli_query($conn, "SELECT * from paket  WHERE id='$idkode' limit 1");
-                $rows=mysqli_fetch_assoc($cek);
-                if(mysqli_num_rows($cek) == 0){
+                 $namabelum            = $_POST['nama'];
+                $nama =mysqli_real_escape_string ( $conn ,$namabelum );
 
-                    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data tidak ditemukan.</div>';
+                $deskripsibelum       = $_POST['deskripsi'];         
+                $deskripsi =mysqli_real_escape_string ( $conn ,$deskripsibelum );
 
+
+                $hargabelum           = $_POST['harga'];
+                $harga= str_replace(".", "", $hargabelum);
+                $min = $_POST['min'];
+                $update = mysqli_query($conn, "UPDATE makanan SET nama='$nama', harga=$harga, deskripsi='$deskripsi',min=$min  WHERE id='$idkode'");
+                if($update){
+                  echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data berhasil disimpan.</div>';
                 }else{
-                    unlink($folder.$rows['link']);
-                    $delete = mysqli_query($conn, "DELETE from paket where id='$idkode'");
-                    
-                    if($delete){
-
-
-                        echo '<div class="alert alert-primary alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data berhasil dihapus.</div>';
-
-                    }else{
-                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Data gagal dihapus.</div>';
-                    }
+                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data gagal disimpan, silahkan coba lagi.</div>';
                 }
             }
-        }
-        if($aktif==1)
-        {
-    echo'<a class="btn btn-primary" href="../uploadpaket.php"><i class="fa fa-user-plus" > </i>upload paket  </a>';
-        }
-    ?>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>Nama Paket</th>
-        <th>Deskripsi  </th>
-        <th>hari-hari </th>
-        <th>harga </th>
-        <th>Foto </th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-    $viewq1=mysqli_query($conn,"SELECT * from paket  where kodepenjual ='$id'");
-    if(mysqli_num_rows($viewq1) ==0){
-                    echo '<tr><td colspan="8">Data Tidak Ada.</td></tr>';
-                }else{
-                    $no = 1;
-                    while($row = mysqli_fetch_assoc($viewq1)){
-                        echo '
-                        <tr>
-                            <td>'.$no.'</td>
-                            <td>'.$row['nama'].'</td>
-                            <td>'.$row['deskripsi'].'</td>
-                            <td>';
-                            $kodepaket=$rows['id'];
-                            $queryj=mysqli_query($conn,"SELECT * from detail_paket,jadwal where '$kodepaket'=idpaket and kodejadwal=jadwal.id");
-                            while ($data=mysqli_fetch_assoc($queryj)) {
-                                $count=mysqli_num_rows($queryj);
-
-                                    if($count>0)
-                                    {
-                                        echo $data['']
-                                    }
-                            }
-                        echo'</td>
-                            <td> <img src="'.$folder.$row['link'].'"  width="100px" height="100px"></td>';
-                       echo '
-                           <td>
-                              '; if($aktif==1)
-                              {  
-                             echo'
-                                <a href="edit_paket.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></>
-
-                            <a href="paket.php?aksi=delete&id='.$row['id'].'title="Hapus Data" onclick="return confirm(\'Anda yakin akan menghapus data makanan '.$row['nama'].'?/\)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                            
-                            </td>
-                        </tr>';
-                    }
-       $no++;         }
-            }
-
             
-        ?>
+            ?>
+                 <form class="form-horizontal" action="" method="post">
+         <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Makanan</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama" class="form-control" placeholder="Makanan" value="<?php echo $data['nama'];?>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Deskripsi</label>
+                    <div class="col-sm-4">
+                        <textarea name="deskripsi" rows="5"  class="form-control" placeholder="Deskripsi Makanan "  required><?php echo $data['deskripsi'];?></textarea> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Harga</label>
+                    
+                    <div class="input-group col-sm-3">
+                    <span class="input-group-addon">Rp</span>
+                    <input type="text" name="harga"  class="form-control" onkeyup="javascript:tandaPemisahTitik(this);" onkeydown="return numbersonly(this, event);" aria-label="rupiah" value="<?php echo $data['harga'];?>" required>
+                    <span class="input-group-addon">.00</span>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-3 control-label">Foto Makanan:</label>
+                    <div class="col-sm-2">
+                        <img src="<?php echo $folder.$data['link'];?>" width="150px" height="150px"> 
+                    </div>
+                    <a href="../gantifotokatering.php?id=<?php echo $data['id'] ?>" class="btn btn-primary"> Ganti Foto </a>
 
-             
-            </div>
-            <!-- /.container-fluid -->
+                </div>
 
+                    <div class="form-group">
+                    <label class="col-sm-3 control-label">Minimal pemesanan:</label>
+                    <div class="col-sm-2">
+                        <input type="text" name="min" class="form-control" value="<?php echo $data['min'];?>"  onkeydown="return numbersonly(this, event);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-6">
+                        <input type="submit" name="save" class="btn btn-sm btn-primary" value="Simpan">
+                        <a href="index.php" class="btn btn-sm btn-danger">Batal</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <!-- /#page-wrapper -->
+  </div>
 
-    </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
 </body>
-
 </html>

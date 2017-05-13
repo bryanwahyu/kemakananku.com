@@ -186,7 +186,8 @@ $folder='../pict/makanan/';
         <th>id</th>
         <th>Nama Makanan</th>
         <th>Deskripsi  </th>
-        <th>harga </th>
+        <th>Harga </th>
+        <th>Minimal Pemesanan </th>
         <th>Foto </th>
         <th>Action</th>
       </tr>
@@ -205,15 +206,16 @@ $folder='../pict/makanan/';
                             <td>'.$row['nama'].'</td>
                             <td>'.$row['deskripsi'].'</td>
                             <td>Rp'.number_format($row['harga'],0,",",".").'</td>
-                            <td> <img src="'.$folder.$row['link'].'" width="100px" height="100px"</td>';
+                            <td>'.$row['min'].'</td>
+                            <td> <img src="'.$folder.$row['link'].'" width="150px" height="150px"</td>';
                        echo '
                            <td>
                               '; if($aktif==1)
                               {  
                              echo'
-                                <a href="edit_makanan.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></>
+                                <a href="edit_makanan.php?id='.$row['id'].'" title="Edit Data" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Makanan</a>
 
-                            <a href="menu.php?aksi=delete&id='.$row['id'].'title="Hapus Data" onclick="return confirm(\'Anda yakin akan menghapus data makanan '.$row['nama'].'?/\)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a href="menu.php?aksi=delete&id='.$row['id'].'title="Hapus Data" onclick="return confirm(\'Anda yakin akan menghapus data makanan '.$row['nama'].'?/\)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Hapus </a>
                             
                             </td>
                         </tr>';

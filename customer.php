@@ -16,7 +16,7 @@ $cekdata=mysqli_num_rows($query1);
 if($cekdata>0)
 
 {
-	echo 'maaf username atau email sudah terdaftar silahkan kembali ke halaman sebelumnya<a href="register.php"> klik disini </a> atau tekan tombol back pada browser jika anda malas mengisi kembail lebih baik tekan tombol back';
+	echo 'maaf username atau email sudah terdaftar silahkan mencari username atau email yang lain ';
 
 }
 else

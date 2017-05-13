@@ -3,9 +3,40 @@
  if($_SESSION)
 {  header("Location : cek.php");
 }
-?>
-<html><head>
-<style type="text/css">
+include 'konfigurasi/database.php';
+?><html><head>
+    <meta charset="utf-8">    
+    <style>
+        .button {
+          display: inline-block;
+          border-radius: 4px;
+          background-color: #f0ad4e;
+          border: none;
+          color: #FFFFFF;
+          text-align: center;
+          font-size: 20px;
+          padding: 10px;
+          width: 130px;
+          transition: all 0.5s;
+          cursor: pointer;
+          margin: 5px;
+        }
+
+        .button span {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 0.5s;
+        }
+
+        .button span:after {
+          content: '\00bb';
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          right: -20px;
+          transition: 0.5s;
+        }
 
         .button:hover span {
           padding-right: 25px;
@@ -16,15 +47,16 @@
           right: 0;
         }
     </style>   
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/valid.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="default.css" rel="stylesheet" type="text/css">
-  </head><body>
-    <div class="row">
+  </head>
+  <body>
+  
       <div class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
@@ -34,38 +66,82 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="img-responsive"><img height="50" alt="Brand" src="pict\logosmall.png" class="center-block img-circle"></a>
+            <a class="img-responsive"><img height="50" alt="Brand" src="../pict/logosmall.png" class="center-block img-circle"></a>
           </div>
           <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="hidden-md hidden-sm nav navbar-nav navbar-right">
+             <li>
+               <a href="index.php">Home</a>
+              </li>
+              <!--<li class="active">
+                <a href="katering.php">Cari Katering<br></a>
+              </li>
+             -->
+             <li >
+                <a href="menu.php">Melihat Menu/Paket</a>
+              </li>
               <li>
-                <a href="promo.php">Home</a>
+                <a href="his.php"> Tentang Kami</a>
               </li>
-              <li class="#">
-                <a href="menunologin.php">Cari Katering<br></a>
-              </li>
-              <li>
-                <a href="tentang.html">Contact Us</a>
-              </li>
-              <li class="dropdown active">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account&nbsp;<i class="fa fa-caret-down text-inverse"></i></a>
+               <li class="dropdown active">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<i class="fa fa-caret-down text-inverse"></i></a> 
+          
                 <ul class="dropdown-menu" role="menu">
                   <li>
-                    <a href="index.php">Log In</a>
+                    <a href="login.php">Login</a>
                   </li>
                   <li class="divider"></li>
-                  <li class="active">
-                    <a href="register.php">Register</a>
+                   <li class="active">
+                  <a href="register.php"> Register</a>
                   </li>
-                </ul>
+                  </ul>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      
-      <div class="cover">
-        
+      <?php
+if(isset($_POST['daftar'])){
+          
+
+
+$email    = $_POST['email'];
+ $user    = $_POST['user'];
+ $pass    = md5($_POST['pass']);
+ $notelp   = $_POST['hp'];
+ $alamat   = $_POST['alamat'];
+ $nama     = $_POST['nama'];
+         $query = mysqli_query($conn,"SELECT * FROM user WHERE ( username='$user' OR email='$email')");
+  
+          if(mysqli_num_rows($query)>0){
+echo '<script>alert("Maaf username atau email sudah di gunakan");</script>';
+        }
+        else
+        { $query1=mysqli_query($conn,"INSERT INTO user (username,password,email,kode_akses) VALUES ('$user','$pass','$email',2)");
+  $lastid =mysqli_insert_id($conn);
+  if ($query1)
+  {
+  $query2=mysqli_query($conn,"INSERT INTO data_pembeli (kode_user,nama,notelp,alamat,tipe_customer) VALUES ('$lastid','$nama','$notelp','$alamat',4)");
+  if($query2)
+{
+    $_SESSION['nama']=$nama;
+  $_SESSION['username']=$user;
+  $_SESSION['akses']='pembeli';
+  header("Location: cek.php");
+  echo '<script>alert("Pendaftaran berhasil"); </script>';
+  }
+  else
+  {
+    echo '<script>alert("ERROR mohon hubungin Admin  laporkan bug");</script>';
+  }
+  }
+  else 
+  echo '<script>alert("Pendaftaran gagal mohon di coba kembali ");</script>';
+        }
+      }
+
+      ?>
+      <div class="cover">        
         <div class="background-image-fixed cover-image" style="background-image : url('header-background2.jpg')"></div>
         <div class="container">
           <div class="row">
@@ -83,13 +159,13 @@
                         <div class="col-md-12">
                             <div class="container">
                               <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                   <h3 class="text-center text-muted">Customer</h3>
                                    <div style="text-align: center;">
-                                      <div class="col-md-6">
+                                      <div class="col-md-12">
                                           <button type="button" class="btn btn-warning"  data-toggle="modal"  data-target="#customer"><span>Customer</span></button>
                                    </div>
-
+<!--
                                       <div class="col-md-6">       <button type="button" class="btn btn-warning" data-toggle="modal"  data-target="#hotel"> Company </button>
 
                                      
@@ -97,6 +173,7 @@
                                     </div>
                                     </div>
                                   </div>
+
                                 <div class="col-md-6">
                                    <h3 class="text-center text-muted">Catering</h3>
                                    <div style="text-align: center;">
@@ -106,6 +183,7 @@
                                    </div>
                                   </div>
                                 </div>
+                                -->
                               </div>
                             </div>
                           </div>
@@ -128,7 +206,7 @@
           <h4 class="modal-title">Customer</h4>
         </div>
         <div class="modal-body">
-        <form class="form-horizontal" method="post" action="customer.php">
+        <form class="form-horizontal" method="post" action="">
     <div class="form-group">
       <label class="control-label col-sm-2">Email:</label>
       <div class="col-sm-10">
@@ -180,7 +258,7 @@
     
     </div>
        <div class="modal-footer">
-          <button type="submit"  onclick="validasi1()" class="btn btn-primary">Daftar </button>
+          <button type="submit"  onclick="validasi1()" name="daftar" class="btn btn-primary">Daftar </button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
      </div>
           </form>
@@ -248,7 +326,7 @@
     
     </div>
        <div class="modal-footer">
-          <button type="submit" onclick="validasi2()" class="btn btn-primary">Daftar </button>
+          <button type="submit" onclick="validasi2()" name ="daftar" class="btn btn-primary">Daftar </button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
      </div>
           </form>

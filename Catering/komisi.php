@@ -89,7 +89,7 @@ $folder='../pict/bukti/';
                             <li>
                                 <a href="promosi.php"><i class="fa fa-cart"></i>
                                 Data Promosi </a>
-                            </li>
+                             </li>
                              <li>
                                 <a href="komisi.php"><i class="fa fa-money"></i> Pembayaran  Komisi </a>
                              </li>

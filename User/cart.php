@@ -1,5 +1,23 @@
+<?php 
+session_start();
+include 'konfigurasi/database.php';
+if (empty($_SESSION)) {
+    header("Location:../index.php");
+ 
+ }
+$user= $_SESSION['username'];
+$query = mysqli_query($conn,"SELECT * FROM user,data_pembeli where (username='$user' or email ='$user') and iduser=kode_user  limit 1");
+
+$row = mysqli_fetch_assoc($query);
+$nama = $row['nama'];
+$iduser    = $row['id'];
+$query1  =mysqli_query($conn,"SELECT * FROM pesanan where kdpembeli='$iduser' and  lunas=0");
+$count=mysqli_num_rows($query1);
+
+?>
+
 <html><head>
-    
+    <meta charset="utf-8">    
     <style>
         .button {
           display: inline-block;
@@ -41,7 +59,7 @@
           right: 0;
         }
     </style>   
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -65,49 +83,99 @@
           <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="hidden-md hidden-sm nav navbar-nav navbar-right">
               <li>
-                <a href="">Home</a>
+                <a href="index.php">Home</a>
               </li>
-              <li class="active">
-                <a href="">Cari Katering<br></a>
-              </li>
+              <!--<li class="active">
+                <a href="catering.php">Cari Katering<br></a>
+              </li>-->
               
               <li>
-                <a href="">Contact Us</a>
+                <a href="menu.php"> Menu/Paket</a>
+              </li>
+              <li>
+                <a href="info.php"> Tentang Kami  </a>
+              </li>
+               <li class="active">
+               <a href="cart.php"> Keranjang <?php echo''?></a>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account&nbsp;<i class="fa fa-caret-down text-inverse"></i></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nama; ?><i class="fa fa-caret-down text-inverse"></i></a> 
+          
                 <ul class="dropdown-menu" role="menu">
                   <li>
-                    <a href="#">Log In</a>
+                    <a href="profile.php">Profile</a>
                   </li>
+                   <li>
+                  <a href="pesanan.php">Lihat Order <?php if ($count>0){echo '&nbsp;<span class="label label-danger">'.$count.'</span>';}
+                  else {
+                    echo'&nbsp; <span class="label label-success"> Semua sudah lunas</span>';
+                    } ?></a>
                   <li class="divider"></li>
                   <li>
-                    <a href="#">Register</a>
+                    <a href="keluar.php">keluar</a>
                   </li>
-                </ul>
+                  </ul>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      
+   <div class="background-image-fixed cover-image" style="background-image : url('../header-background2.jpg')">  
       <div class="cover">
         <div class="col-sm-2">
           <div class="container">
             <div class="row">
-              <div class="col-md-12">
+             <div class="col-md-12">
                 <div class="thumbnail">
-                  <img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive">
                   <div class="caption">
-                    <h5 contenteditable="true">Your Account</h5>
-                    <p>Info Akun</p>
-                  </div>
+                    <h5 contenteditable="true"> Data Profil  </h5>
+                    <?php
+  $viewcat=mysqli_query($conn,"SELECT * FROM data_catering where Aktif=1  and id =$kodecat limit 1 ");
+  $cat=mysqli_fetch_assoc($viewcat);
+      if (!isset($cat['logo']))
+                    {
+                    echo'
+                            
+                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
+                              <p>'.$cat['nama_catering'].'</p>
+                              <p>Alamat : </p>
+                              <h6>'.$cat['alamat'].'</h6>
+                              <p>deskripsi :</p>
+
+                              <h6>'.$cat['deskripsi'].' </h6>
+                              <p>no Telepon :</p>
+                              <h5>'.$cat['notelp'].' </h5>
+                    ';
+                    }else
+                    {
+
+                    echo'
+                              <a><img src='.['logo'].'class="img-responsive"></a>
+                              <p>'.$data['nama_catering'].'</p>
+                              <p>Alamat : </p>
+                              <h6>'.$data['alamat'].'</h6>
+                              <p>deskripsi :</p>
+
+                              <h6>'.$data['deskripsi'].' </h6>
+                              <p>no Telepon :</p>
+                              <h5>'.$cat['notelp'].'</h5> 
+
+                        ';
+                    }
+                 
+
+
+                    ?>            
+
+
+                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="background-image-fixed cover-image" style="background-image : url('../header-background2.jpg')"></div>
+
+        
         <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -116,69 +184,28 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="thumbnail">
-                        <h1 class="text-center" contenteditable="true">Pilih Katering</h1>
-                        <p class="text-center lead">A subtitle.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <div class="thumbnail">
-                          <div class="caption">
-                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
-                              <h5>Nama 1</h5>
-                              <h6>Keterangan :</h6>
-                              <p>
-                                <button type="button" class="button" style="vertical-align:middle" data-target="#1"><span>Select</span> </button>
-                              </p>
-                            </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="thumbnail">
-                            <div class="caption">
-                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
-                              <h5>Nama 2</h5>
-                              <h6>Keterangan :</h6>
-                              <p>
-                                <button type="button" class="button" style="vertical-align:middle" data-target="#1"><span>Select</span> </button>
-                              </p>
-                            </div>
+                        <h1 class="text-center" contenteditable="true">Lihat Keranjang</h1>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="thumbnail">
-                            <div class="caption">
-                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
-                              <h5>Nama 3</h5>
-                              <h6>Keterangan :</h6>
-                              <p>
-                                <button type="button" class="button" style="vertical-align:middle" data-target="#1"><span>Select</span> </button>
-                              </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                  </div>
-                  
-                  
-                </div>
+
+
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
       <footer class="section section-warning">
         <div class="container">
 
               <div class="row">
                <center>
-              		<h3> Follow Us And Like Us </h3>
+                  <h3> Follow Us And Like Us </h3>
                   <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
                   <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
                   <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
                   <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-     	`	  </center>
+      `   </center>
               </div>
             
           <div class="row">

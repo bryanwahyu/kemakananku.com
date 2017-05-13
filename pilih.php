@@ -1,12 +1,10 @@
-<?php 
+
+  <?php 
 session_start();
 include 'konfigurasi/database.php';
 if ($_SESSION) {
     header("Location:cek.php");
-    $folder='pict/makanan/';
-$folderp='pict/paket/';
-}
-?>
+}$kodecat=$_GET['id'];?>
 <html><head>
     <meta charset="utf-8">    
     <style>
@@ -76,17 +74,16 @@ $folderp='pict/paket/';
              <li>
                <a href="index.php">Home</a>
               </li>
-             <!-- <li>
+              <li class="active">
                 <a href="katering.php">Cari Katering<br></a>
               </li>
-              -->
-             <li class="active">
+              
+             <li >
                 <a href="menu.php">Melihat Menu/Paket</a>
               </li>
               <li>
                 <a href="his.php"> Tentang Kami</a>
               </li>
-             
                <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<i class="fa fa-caret-down text-inverse"></i></a> 
           
@@ -104,56 +101,94 @@ $folderp='pict/paket/';
           </div>
         </div>
       </div>
-      </div>
-      <!--
+<div class="background-image-fixed cover-image" style="background-image : url('header-background2.jpg')">  
       <div class="cover">
         <div class="col-sm-2">
           <div class="container">
             <div class="row">
-              <div class="col-md-12">
+             <div class="col-md-12">
                 <div class="thumbnail">
                   <div class="caption">
-                    <h5 contenteditable="true"> Rekomendasi kami </h5>
-                    <p>                   </div>
+                    <h5 contenteditable="true"> Data Catering  </h5>
+                    <?php
+  $viewcat=mysqli_query($conn,"SELECT * FROM data_catering where Aktif=1  and id =$kodecat limit 1 ");
+  $cat=mysqli_fetch_assoc($viewcat);
+      if (!isset($cat['logo']))
+                    {
+                    echo'
+                            
+                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
+                              <p>'.$cat['nama_catering'].'</p>
+                              <p>Alamat : </p>
+                              <h6>'.$cat['alamat'].'</h6>
+                              <p>deskripsi :</p>
+
+                              <h6>'.$cat['deskripsi'].' </h6>
+                              
+                    ';
+                    }else
+                    { 
+
+                    echo'
+                              <a><img src='.$cat['logo'].'class="img-responsive"></a>
+                              <p>'.$cat['nama_catering'].'</p>
+                              <p>Alamat : </p>
+                              <h6>'.$cat['alamat'].'</h6>
+                              <p>deskripsi :</p>
+
+                              <h6>'.$cat['deskripsi'].' </h6>
+                            
+
+                        ';
+                    }
+                 
+
+
+                    ?>            
+
+
+                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>-->
-        <div class="background-image-fixed cover-image" style="background-image : url('header-background2.jpg')">
-        <div class="container">
-          <div class="row">
-          <!-- container-->
-            <div class="col-md-12">
+        </div>
+
+
+        
+          <div class="col-md-12">
               <div class="section">
                 <div class="container">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="thumbnail">
-                        <h1 class="text-center" contenteditable="true">Menu</h1>
-                        
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="thumbnail">
+                        <h1 class="text-center" contenteditable="true">Lihat Menu</h1> 
+                        </div>
+                      </div>
+
                     </div>
-                  </div>
+                </div>
                   <div class="row">
                   <?php
                   
-                  $view1=mysqli_query($conn,"SELECT makanan.id,data_catering.nama_catering,makanan.nama,makanan.harga,makanan.link,makanan.promo,data_catering.alamat,makanan.deskripsi FROM makanan,data_catering where data_catering.Aktif=1 and makanan.kodepenjual=data_catering.id");
+                   $view1=mysqli_query($conn,"SELECT makanan.id,data_catering.nama_catering,makanan.nama,makanan.harga,makanan.link,makanan.promo,data_catering.alamat,makanan.deskripsi FROM makanan,data_catering where data_catering.Aktif=1 and makanan.kodepenjual=$kodecat");
+
+
                   while ($data=mysqli_fetch_assoc($view1)) {
                     if (!isset($data['link']))
                     {
                     echo'<div class="col-md-3">
                         <div class="thumbnail">
                             <div class="caption">
-                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"  width="150px" height="150px"></a>
+                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
                               <h5>'.$data['nama'].'</h5>
                               <h6>Oleh : </h6>
                               <p>'.$data['nama_catering'].'</p>
                               <
                               <h6>Harga : </h6>';
               if ($data['promo']=1) {
-              $harga =$data['harga']*70/100;
                               echo'
-                             <p>Rp.'.number_format($harga).'</p>
+                             <p>Rp.'.number_format($data['harga']).'</p>
                               <h6>deskripsi :</h6>
                               <p>'.$data['deskripsi'].' </p>
                               <p>PROMO</p>
@@ -162,11 +197,13 @@ $folderp='pict/paket/';
                               </center>
                         </div>
                     </div>
-                    </div>';
+                  </div>';
 }else
 {
+                $harga =$data['harga']*110/100;
+
                 echo'
-                             <p>Rp.'.number_format($data['harga']).'</p>
+                             <p>Rp.'.number_format($harga).'</p>
                               <h6>deskripsi :</h6>
                               <p>'.$data['deskripsi'].' </p>
                               <center>
@@ -183,16 +220,15 @@ $folderm='pict/makanan/';
                     echo'<div class="col-md-3">
                         <div class="thumbnail">
                             <div class="caption">
-                              <a><img src="'.$folderm.''.$data['link'].'"class="img-responsive"  style="border:0px; width:200px; height:200px;" ></a>
+                              <a><img src="'.$folderm.''.$data['link'].'"class="img-responsive" ></a>
                                   <h5>'.$data['nama'].'</h5>
                               <h6>Oleh : </h6>
                               <p>'.$data['nama_catering'].'</p>
                               
                               <h6>Harga : </h6>';
-              if ($data['promo']=0){
-              $harga =$data['harga']*70/100;
+              if ($data['promo']=1) {
                               echo'
-                             <p>Rp.'.number_format($harga).'</p>
+                             <p>Rp.'.number_format($data['harga']).'</p>
                               <h6>deskripsi :</h6>
                               <p>'.$data['deskripsi'].' </p>
                               <p>PROMO</p>
@@ -203,9 +239,10 @@ $folderm='pict/makanan/';
                     </div>
                     </div>';
         }else
-      {
+      {              $harga =$data['harga']*110/100;
+
                 echo'
-                             <p>Rp.'.number_format($data['harga']).'</p>
+                             <p>Rp.'.number_format($harga).'</p>
                               <h6>deskripsi :</h6>
                               <p>'.$data['deskripsi'].' </p>
                               <center>
@@ -220,18 +257,117 @@ $folderm='pict/makanan/';
                   ?>
                     
                   </div>
+               </div>
+
                   
+                  
+            <div class="col-md-12">
+              <div class="section">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="thumbnail">
+                        <h1 class="text-center" contenteditable="true">Paket</h1>
+                        
+                    </div>
+                  </div>
+                  <div class="row">
+                  <?php
+                  
+                  $view2=mysqli_query($conn,"SELECT paket.id,data_catering.nama_catering,paket.nama,makanan.harga,paket.link,paket.promo,data_catering.alamat,paket.deskripsi FROM paket,data_catering where data_catering.Aktif=1 and paket.kodepenjual=$kodecat");
+
+                  while ($data2=mysqli_fetch_assoc($view2)) {
+                    if (!isset($data['link']))
+                    {
+                    echo'<div class="col-md-3">
+                        <div class="thumbnail">
+                            <div class="caption">
+                              <a><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
+                              <h4>'.$data['nama'].'</h4>
+                              
+                              <h6>Harga : </h6>';
+              if ($data['promo']=1) {
+              
+                              echo'
+                             <p>Rp.'.number_format($data['harga']).'</p>
+                              <h6>deskripsi :</h6>
+                              <p>'.$data['deskripsi'].' </p>
+                              <p>PROMO</p>
+                              <center>
+                                <a href="order.php?id='.$data['id'].'" class="button" style="vertical-align:middle"><span> Lihat Menu </span></a>
+                              </center>
+                        </div>
+                    </div>
+                    </div>';
+}else
+{
+  $harga =$data['harga']*110/100;
+                echo'
+                
+                             <p>Rp.'.number_format($harga).'</p>
+                              <h6>deskripsi :</h6>
+                              <p>'.$data['deskripsi'].' </p>
+                              <center>
+                                <a href="orderp.php?id='.$data['id'].'" class="button" style="vertical-align:middle"><span> Lihat Paket</span></a>
+                              </center>
+                        </div>
+                    </div>
+                  </div>
+                   </div>';
+}
+
+                    }else
+                    {
+$folderp='pict/paket/';
+                    echo'<div class="col-md-3">
+                        <div class="thumbnail">
+                            <div class="caption">
+                              <a><img src="'.$folderp.''.$data['link'].'"class="img-responsive"></a>
+                                  <h5>'.$data['nama'].'</h5>
+ 
+                              <h6>Harga : </h6>';
+              if ($data['promo']=1) {
+                              echo'
+                             <p>Rp.'.number_format($data['harga']).'</p>
+                              <h6>deskripsi :</h6>
+                              <p>'.$data['deskripsi'].' </p>
+                              <p>PROMO</p>
+                              <center>
+                                <a href="orderp.php?id='.$data['id'].'" class="button" style="vertical-align:middle"><span>Lihat Paket </span></a>
+                              </center>
+                        </div>
+                    </div>
+                    </div>';
+        }else
+      {
+            $harga =$data['harga']*110/100;
+
+                echo'
+                             <p>Rp.'.number_format($harga).'</p>
+                              <h6>deskripsi :</h6>
+                              <p>'.$data['deskripsi'].' </p>
+                              <center>
+                                <a href="order.php?id='.$data['id'].'" class="button" style="vertical-align:middle"><span>Lihat Paket </span></a>
+                              </center>
+                        </div>
+                    </div>
+                    </div>';
+      }
+                    }
+                  }
+                  ?>
+                    
+                  </div>
                   
                 </div>
               </div>
             </div>
-          </div>     
-<!-- end of menu -->
-       </div>
+          </div>
+        </div>
       </div>
-      </div>
-     
-                       <footer class="section section-warning">
+    </div>
+
+      <footer class="section section-warning">
         <div class="container">
 
               <div class="row">
@@ -256,9 +392,8 @@ $folderm='pict/makanan/';
           </p>
           </center>
          </div>      
-       </div>        
-       </footer>
-    </div>
-  
+       </div>   
+
+       </footer>  
 
 </body></html>

@@ -14,8 +14,7 @@ $iduser    = $row['id'];
 $query1  =mysqli_query($conn,"SELECT * FROM pesanan where kdpembeli='$iduser' and  lunas=0");
 $count=mysqli_num_rows($query1);
 
-?>
-<html><head>
+?><html><head>
     <meta charset="utf-8">    
     <style>
         .button {
@@ -89,10 +88,13 @@ $count=mysqli_num_rows($query1);
               </li>
               
               <li>
-                <a href="menu.php">Melihat Menu/Paket</a>
+                <a href="menu.php"> Menu/Paket</a>
               </li>
               <li>
-                <a href="his.php"> Contact Us </a>
+                <a href="info.php"> Tentang Kami  </a>
+              </li>
+               <li>
+                <a href="cart.php"> Keranjang </a>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nama; ?><i class="fa fa-caret-down text-inverse"></i></a> 

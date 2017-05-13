@@ -84,15 +84,19 @@ $kodecat=$_GET['id'];
               <li>
                 <a href="index.php">Home</a>
               </li>
-              <li class="active">
-                <a href="catering.php">Cari Katering<br></a>
-              </li>
-              
+              <!--
               <li>
+                <a href="katering.php">Cari Katering<br></a>
+              </li>-->
+              
+              <li class="active">
                 <a href="menu.php"> Menu/Paket</a>
               </li>
               <li>
-                <a href="info.php"> Contact Us  </a>
+                <a href="info.php"> Tentang Kami  </a>
+              </li>
+               <li>
+                <a href="cart.php"> Keranjang </a>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nama; ?><i class="fa fa-caret-down text-inverse"></i></a> 
@@ -283,7 +287,7 @@ $folderm='../pict/makanan/';
                   <div class="row">
                   <?php
                   
-                  $view2=mysqli_query($conn,"SELECT paket.id,data_catering.nama_catering,paket.nama,makanan.harga,paket.link,paket.promo,data_catering.alamat,paket.deskripsi FROM paket,data_catering where data_catering.Aktif=1 and makanan.kodepenjual=$kodecat");
+                  $view2=mysqli_query($conn,"SELECT paket.id,data_catering.nama_catering,paket.nama,makanan.harga,paket.link,paket.promo,data_catering.alamat,paket.deskripsi FROM paket,data_catering where data_catering.Aktif=1 and paket.kodepenjual=$kodecat");
 
                   while ($data2=mysqli_fetch_assoc($view2)) {
                     if (!isset($data['link']))
@@ -295,7 +299,7 @@ $folderm='../pict/makanan/';
                               <h4>'.$data['nama'].'</h4>
                               
                               <h6>Harga : </h6>';
-              if ($data['promo']=1) {
+              if ($data['promo']==1) {
               
                               echo'
                              <p>Rp.'.number_format($data['harga']).'</p>
